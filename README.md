@@ -1,78 +1,112 @@
-# MediAssist 🏥
+# MediAssist
 
-**MediAssist** is an AI-powered healthcare platform that provides early risk assessment for Diabetes, Heart Disease, and Parkinson's Disease using machine learning models.
+MediAssist is a comprehensive healthcare platform designed to provide early risk assessment for multiple diseases using machine learning. The application combines a modern, responsive frontend with a robust Python-based backend to deliver real-time predictions for Diabetes, Heart Disease, and Parkinson's Disease.
 
-## 🚀 Project Structure
+## Key Features
 
-The project is divided into two parts:
+### Disease Prediction
+- **Diabetes Risk Assessment**: Analyzes clinical parameters like Glucose, BMI, and Age.
+- **Heart Disease Detection**: Evaluates cardiovascular metrics including Chest Pain type, Blood Pressure, and Cholesterol.
+- **Parkinson's Disease Analysis**: Processes complex vocal and motor features for early detection.
 
-- **`/client`**: A modern frontend built with **Next.js 14**, **Tailwind CSS**, and **Framer Motion**.
-- **`/server`**: A backend API built with **Flask** (Python) that serves the machine learning models.
+### User Experience
+- **Secure Authentication**: Supports both Email/Password and Google OAuth login. Includes intelligent account linking to merge profiles seamlessly.
+- **Interactive Dashboard**: Visualizes prediction history and health trends using dynamic charts.
+- **Profile Management**: Allows users to update personal details which are automatically pre-filled in prediction forms.
+- **History Tracking**: Stores all past predictions securely, allowing users to review their health assessment timeline.
 
-## 🛠️ Prerequisites
+## Technology Stack
 
-- **Node.js** (v18 or higher)
-- **Python** (v3.8 or higher)
+**Frontend (Client)**
+- **Framework**: Next.js 14 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Authentication**: NextAuth.js
+- **Visualization**: Recharts
 
-## 📦 Installation & Setup
+**Backend (Server)**
+- **Framework**: Flask
+- **Language**: Python 3.x
+- **Machine Learning**: Scikit-learn, Pandas, NumPy
+- **Models**: Random Forest, XGBoost, Logistic Regression
 
-### 1. Backend Setup (Server)
+**Database**
+- **Primary DB**: MongoDB (via Mongoose)
 
-Navigate to the server directory and set up the Python environment:
+## Getting Started
+
+### Prerequisites
+- Node.js (v18 or higher)
+- Python (v3.8 or higher)
+- MongoDB Database (Local or Atlas)
+
+### Installation
+
+#### 1. Server Setup
+The backend handles all machine learning inference requests.
 
 ```bash
 cd server
-
-# Create a virtual environment
 python -m venv venv
 
-# Activate the virtual environment
-# On Windows:
+# Windows
 venv\Scripts\activate
-# On macOS/Linux:
+# macOS/Linux
 source venv/bin/activate
 
-# Install dependencies
 pip install -r requirements.txt
 ```
 
-### 2. Frontend Setup (Client)
-
-Open a new terminal, navigate to the client directory, and install dependencies:
+#### 2. Client Setup
+The frontend provides the user interface and handles authentication/database interactions.
 
 ```bash
 cd client
 npm install
 ```
 
-## 🏃‍♂️ Running the Application
+### Configuration
 
-### Step 1: Start the Backend API
+Create a `.env.local` file in the `client` directory with the following variables:
 
-In your **server** terminal (with venv activated):
+```env
+# Database Connection
+MONGODB_URI=your_mongodb_connection_string
 
+# NextAuth Configuration
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your_random_secret_key
+
+# Google OAuth (Optional, for Google Login)
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+```
+
+### Running the Application
+
+**Start the Backend Server**
+Open a terminal in the `server` directory:
 ```bash
 python app.py
 ```
-The API will start at `http://localhost:5000`.
+The API will run on `http://localhost:5000`.
 
-### Step 2: Start the Frontend
-
-In your **client** terminal:
-
+**Start the Frontend Client**
+Open a new terminal in the `client` directory:
 ```bash
 npm run dev
 ```
-The application will be available at `http://localhost:3000`.
+The application will be accessible at `http://localhost:3000`.
 
-## 🧠 Machine Learning Models
+## Project Structure
 
-The application uses the following models trained on public medical datasets:
+- **client/**: Contains the Next.js frontend application.
+  - **app/**: App Router pages and API routes.
+  - **components/**: Reusable UI components.
+  - **lib/**: Utility functions and database configurations.
+  - **models/**: Mongoose database schemas.
 
-- **Diabetes**: Logistic Regression / Random Forest
-- **Heart Disease**: Random Forest
-- **Parkinson's**: XGBoost
-
-## 📄 License
-
-This project is for educational purposes only.
+- **server/**: Contains the Flask backend application.
+  - **models/**: Serialized machine learning models (.pkl files).
+  - **routes/**: API endpoints for predictions.
+  - **data/**: Datasets used for training (if applicable).
