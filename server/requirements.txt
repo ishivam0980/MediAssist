@@ -1,0 +1,15 @@
+# Core Data Science Libraries (for preprocessing and predictions)
+pandas
+numpy
+scikit-learn
+xgboost
+
+# Flask - ONLY for ML model API endpoints
+Flask
+Flask-CORS
+
+# Model Serialization
+joblib
+
+# Environment Variables
+python-dotenv
