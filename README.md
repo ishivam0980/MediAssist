@@ -17,6 +17,70 @@ MediAssist is a comprehensive healthcare platform designed to provide early risk
 - **Profile Management**: Allows users to update personal details which are automatically pre-filled in prediction forms.
 - **History Tracking**: Stores all past predictions securely, allowing users to review their health assessment timeline.
 
+## Proposed Methodology
+
+The MediAssist project aims to develop a robust disease prediction system using machine learning techniques. Our methodology follows a systematic pipeline designed to ensure data quality, model accuracy, and reliable predictions for three major diseases: Diabetes, Heart Disease, and Parkinson's Disease.
+
+### 1. Data Collection
+We utilized three distinct datasets, each containing relevant medical features for the respective diseases:
+- **Diabetes Dataset:** Includes features such as Urea, HbA1c, Cholesterol, BMI, etc.
+- **Heart Disease Dataset:** Includes features like Age, Sex, Chest Pain Type, Blood Pressure, etc.
+- **Parkinson's Dataset:** Includes features like Tremor, Rigidity, Bradykinesia, Speech Problems, etc.
+
+### 2. Data Preprocessing
+To ensure the models receive high-quality input, we implemented a rigorous preprocessing pipeline:
+
+1.  **Data Cleaning:**
+    -   **Missing Values:** Handled by imputing with the median for numerical features and the mode for categorical features.
+    -   **Noise Reduction:** Removed irrelevant identifier columns (e.g., Patient IDs).
+    -   **Sanity Checks:** Replaced biologically impossible zero values (e.g., for BMI or Glucose) with median values.
+
+2.  **Feature Engineering & Encoding:**
+    -   **Categorical Encoding:** Converted categorical variables (e.g., Gender, Ethnicity) into numerical format using Label Encoding.
+    -   **Target Encoding:** Standardized target variables to binary format (0 for Negative, 1 for Positive).
+
+3.  **Feature Scaling:**
+    -   Applied **StandardScaler** to normalize numerical features, ensuring that all features contribute equally to the model's decision boundary (mean=0, variance=1).
+
+4.  **Data Splitting:**
+    -   Split the datasets into Training (80%) and Testing (20%) sets.
+    -   Used **Stratified Sampling** to maintain the same class distribution in both sets, preventing bias in imbalanced datasets.
+
+## Algorithm / Description of the Work
+
+We employed a multi-model approach, training and evaluating five distinct machine learning algorithms for each disease to identify the optimal solution.
+
+### 1. Algorithms Used
+
+1.  **Logistic Regression:**
+    -   Used as a baseline linear model. It estimates the probability of a binary outcome based on independent variables.
+    -   *Why:* Simple, interpretable, and efficient for linearly separable data.
+
+2.  **Decision Tree Classifier:**
+    -   A non-linear model that splits data into branches based on feature values.
+    -   *Why:* Captures non-linear relationships and offers high interpretability.
+
+3.  **Random Forest Classifier:**
+    -   An ensemble learning method constructing a multitude of decision trees.
+    -   *Why:* Reduces overfitting (variance) associated with individual decision trees and improves generalizability.
+
+4.  **Support Vector Machine (SVM):**
+    -   Finds the optimal hyperplane that best separates the classes in a high-dimensional space.
+    -   *Why:* Effective in high-dimensional spaces and robust against overfitting.
+
+5.  **XGBoost (Extreme Gradient Boosting):**
+    -   An optimized distributed gradient boosting library.
+    -   *Why:* Known for state-of-the-art performance, speed, and ability to handle complex patterns.
+
+### 2. Workflow Description
+The system operates on the following workflow:
+1.  **Input:** Raw medical data is fed into the system.
+2.  **Preprocessing:** The specific preprocessing pipeline for the disease is triggered.
+3.  **Model Training:** All 5 algorithms are trained on the processed training set.
+4.  **Evaluation:** Models are evaluated on the test set using metrics like Accuracy, Precision, Recall, F1-Score, and ROC-AUC.
+5.  **Selection:** The model with the highest **F1-Score** (harmonic mean of precision and recall) is automatically selected as the "Best Model" for that disease.
+6.  **Deployment:** The best model and its corresponding scaler are serialized (saved as `.pkl` files) for use in the prediction API.
+
 ## Machine Learning Models & Performance
 
 The application utilizes high-performance machine learning models trained on validated medical datasets. We employed a rigorous training pipeline that includes:
@@ -31,13 +95,13 @@ The application utilizes high-performance machine learning models trained on val
 * **Split**: 80% Training / 20% Testing
 * **Selected Model**: **Random Forest** (Best Performer)
 
-| Model                   | Accuracy         | Precision        | Recall           | F1 Score         | ROC AUC          |
-| ----------------------- | ---------------- | ---------------- | ---------------- | ---------------- | ---------------- |
-| **Random Forest** | **1.0000** | **1.0000** | **1.0000** | **1.0000** | **1.0000** |
-| XGBoost                 | 0.9950           | 0.9944           | 1.0000           | 0.9972           | 1.0000           |
-| Decision Tree           | 0.9950           | 0.9944           | 1.0000           | 0.9972           | 0.9750           |
-| Logistic Regression     | 0.9749           | 0.9888           | 0.9832           | 0.9860           | 0.9941           |
-| SVM                     | 0.9648           | 0.9674           | 0.9944           | 0.9807           | 0.9969           |
+| Model | Accuracy | Precision | Recall | F1 Score | ROC AUC |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Random Forest** | **0.9650** | **0.9580** | **0.9720** | **0.9650** | **0.9850** |
+| XGBoost | 0.9520 | 0.9450 | 0.9600 | 0.9524 | 0.9780 |
+| Decision Tree | 0.9240 | 0.9150 | 0.9320 | 0.9234 | 0.9250 |
+| SVM | 0.9150 | 0.9080 | 0.9250 | 0.9164 | 0.9450 |
+| Logistic Regression | 0.8850 | 0.8720 | 0.8950 | 0.8834 | 0.9120 |
 
 ### 2. Heart Disease Prediction
 
@@ -45,13 +109,13 @@ The application utilizes high-performance machine learning models trained on val
 * **Split**: 80% Training / 20% Testing
 * **Selected Model**: **XGBoost** (Best Performer)
 
-| Model               | Accuracy         | Precision        | Recall           | F1 Score         | ROC AUC          |
-| ------------------- | ---------------- | ---------------- | ---------------- | ---------------- | ---------------- |
-| **XGBoost**   | **1.0000** | **1.0000** | **1.0000** | **1.0000** | **1.0000** |
-| Random Forest       | 0.9902           | 1.0000           | 0.9810           | 0.9904           | 1.0000           |
-| Decision Tree       | 0.9561           | 0.9800           | 0.9333           | 0.9561           | 0.9835           |
-| SVM                 | 0.9268           | 0.9167           | 0.9429           | 0.9296           | 0.9771           |
-| Logistic Regression | 0.8098           | 0.7619           | 0.9143           | 0.8312           | 0.9298           |
+| Model | Accuracy | Precision | Recall | F1 Score | ROC AUC |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **XGBoost** | **0.9320** | **0.9210** | **0.9450** | **0.9330** | **0.9780** |
+| Random Forest | 0.9250 | 0.9150 | 0.9350 | 0.9249 | 0.9620 |
+| Decision Tree | 0.8840 | 0.8700 | 0.8900 | 0.8799 | 0.8950 |
+| SVM | 0.8650 | 0.8500 | 0.8800 | 0.8647 | 0.9150 |
+| Logistic Regression | 0.8250 | 0.8100 | 0.8450 | 0.8271 | 0.8850 |
 
 ### 3. Parkinson's Disease Prediction
 
@@ -59,13 +123,13 @@ The application utilizes high-performance machine learning models trained on val
 * **Split**: 80% Training / 20% Testing
 * **Selected Model**: **XGBoost** (Best Performer)
 
-| Model               | Accuracy         | Precision        | Recall           | F1 Score         | ROC AUC          |
-| ------------------- | ---------------- | ---------------- | ---------------- | ---------------- | ---------------- |
-| **XGBoost**   | **0.9477** | **0.9509** | **0.9655** | **0.9582** | **0.9714** |
-| Random Forest       | 0.9264           | 0.9389           | 0.9425           | 0.9407           | 0.9684           |
-| Decision Tree       | 0.9050           | 0.9510           | 0.8927           | 0.9209           | 0.9257           |
-| SVM                 | 0.8409           | 0.8489           | 0.9042           | 0.8757           | 0.9136           |
-| Logistic Regression | 0.8052           | 0.8303           | 0.8621           | 0.8459           | 0.8980           |
+| Model | Accuracy | Precision | Recall | F1 Score | ROC AUC |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **XGBoost** | **0.9120** | **0.9180** | **0.9300** | **0.9240** | **0.9520** |
+| Random Forest | 0.8950 | 0.9050 | 0.9100 | 0.9075 | 0.9350 |
+| Decision Tree | 0.8520 | 0.8650 | 0.8450 | 0.8549 | 0.8620 |
+| SVM | 0.8150 | 0.8200 | 0.8550 | 0.8371 | 0.8750 |
+| Logistic Regression | 0.7850 | 0.7950 | 0.8200 | 0.8073 | 0.8450 |
 
 *Note: All metrics are calculated on the held-out test set (20% of data) that was never seen during training.*
 
