@@ -9,8 +9,9 @@ export async function POST(req: Request) {
     const body = await req.json();
     const session = await getServerSession(authOptions);
 
-    // 1. Call Flask API
-    const flaskResponse = await fetch("http://localhost:5000/api/predict/heart-disease", {
+    // 1. Call FastAPI Backend
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+    const flaskResponse = await fetch(`${API_URL}/api/predict/heart-disease`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
