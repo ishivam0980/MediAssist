@@ -30,7 +30,14 @@ export const authOptions: NextAuthOptions = {
         
         const isValid = await bcrypt.compare(credentials.password, user.password);
         if (!isValid) throw new Error("Invalid password");
-        return user;
+        
+        // Return plain object instead of Mongoose document
+        return {
+          id: user._id.toString(),
+          email: user.email,
+          name: user.name,
+          image: user.image,
+        };
       },
     }),
   ],

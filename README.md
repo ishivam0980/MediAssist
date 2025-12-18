@@ -144,94 +144,346 @@ The application utilizes high-performance machine learning models trained on val
 
 **Frontend (Client)**
 
-- **Framework**: Next.js 16
+- **Framework**: Next.js 14 (App Router)
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
-- **Authentication**: NextAuth.js
+- **Authentication**: NextAuth.js (Email/Password + Google OAuth)
 - **Visualization**: Recharts
+- **HTTP Client**: Fetch API
 
 **Backend (Server)**
 
-- **Framework**: FastAPI
-- **Language**: Python 3.x
-- **Machine Learning**: Scikit-learn, Pandas, NumPy
-- **Models**: Random Forest, XGBoost, Logistic Regression
+- **Framework**: FastAPI (Python web framework)
+- **Language**: Python 3.11+
+- **Machine Learning**: Scikit-learn, XGBoost, Pandas, NumPy
+- **Model Serialization**: Joblib
+- **Validation**: Pydantic
 
 **Database**
 
-- **Primary DB**: MongoDB (via Mongoose)
+- **Primary DB**: MongoDB Atlas (Cloud-hosted)
+- **ODM**: Mongoose (for Next.js API routes)
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js (v18 or higher)
-- Python (v3.8 or higher)
-- MongoDB Database (Local or Atlas)
+Before you begin, ensure you have the following installed:
 
-### Installation
+- **Node.js**: v18 or higher ([Download](https://nodejs.org/))
+- **Python**: v3.11 or higher ([Download](https://www.python.org/downloads/))
+- **Git**: For cloning the repository ([Download](https://git-scm.com/))
+- **MongoDB Atlas Account**: Free tier ([Sign up](https://www.mongodb.com/cloud/atlas/register))
+- **Google Cloud Account**: For OAuth (optional) ([Console](https://console.cloud.google.com/))
 
-#### 1. Server Setup
+### Step 1: Clone the Repository
 
-The backend handles all machine learning inference requests.
+```bash
+git clone https://github.com/ishivam0980/MediAssist.git
+cd MediAssist
+```
+
+### Step 2: MongoDB Atlas Setup
+
+1. **Create a MongoDB Atlas Account**
+   - Go to [MongoDB Atlas](https://www.mongodb.com/cloud/atlas/register)
+   - Sign up for a free account
+
+2. **Create a New Cluster**
+   - Click "Build a Database"
+   - Choose the FREE tier (M0 Sandbox)
+   - Select a cloud provider and region close to you
+   - Click "Create Cluster" (takes 3-5 minutes)
+
+3. **Create Database User**
+   - Go to "Database Access" in the left sidebar
+   - Click "Add New Database User"
+   - Choose "Password" authentication
+   - Set username and password (save these!)
+   - Set role to "Read and write to any database"
+   - Click "Add User"
+
+4. **Allow Network Access**
+   - Go to "Network Access" in the left sidebar
+   - Click "Add IP Address"
+   - Click "Allow Access from Anywhere" (0.0.0.0/0)
+   - Click "Confirm"
+
+5. **Get Connection String**
+   - Go to "Database" in the left sidebar
+   - Click "Connect" on your cluster
+   - Choose "Connect your application"
+   - Copy the connection string (looks like: `mongodb+srv://username:password@cluster0.xxxxx.mongodb.net/?appName=Cluster0`)
+   - Replace `<password>` with your actual password
+
+### Step 3: Google OAuth Setup (Optional)
+
+Skip this if you only want email/password login.
+
+1. **Go to Google Cloud Console**
+   - Visit [Google Cloud Console](https://console.cloud.google.com/)
+   - Create a new project or select existing one
+
+2. **Enable Google+ API**
+   - Go to "APIs & Services" > "Library"
+   - Search for "Google+ API"
+   - Click "Enable"
+
+3. **Create OAuth Credentials**
+   - Go to "APIs & Services" > "Credentials"
+   - Click "Create Credentials" > "OAuth Client ID"
+   - Configure consent screen if prompted
+   - Application type: "Web application"
+   - Name: "MediAssist"
+   - Authorized JavaScript origins:
+     - `http://localhost:3000`
+   - Authorized redirect URIs:
+     - `http://localhost:3000/api/auth/callback/google`
+   - Click "Create"
+   - Copy Client ID and Client Secret
+
+### Step 4: Backend (Server) Setup
+
+1. **Navigate to server directory**
+   ```bash
+   cd server
+   ```
+
+2. **Create Python virtual environment**
+   ```bash
+   # Windows
+   python -m venv venv
+   venv\Scripts\activate
+
+   # macOS/Linux
+   python3 -m venv venv
+   source venv/bin/activate
+   ```
+
+3. **Install Python dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Verify installation**
+   ```bash
+   python -c "import fastapi, uvicorn; print('FastAPI installed successfully')"
+   ```
+
+### Step 5: Frontend (Client) Setup
+
+1. **Open a NEW terminal and navigate to client directory**
+   ```bash
+   cd client
+   ```
+
+2. **Install Node.js dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Verify installation**
+   ```bash
+   npm list next
+   ```
+
+### Step 6: Environment Configuration
+
+1. **Create `.env.local` file in the `client` directory**
+
+   Create a new file named `.env.local` inside the `client` folder with the following content:
+
+   ```env
+   # Backend API URL (Do NOT change for local development)
+   NEXT_PUBLIC_API_URL=http://localhost:5000/api
+
+   # MongoDB Atlas Connection String (from Step 2)
+   MONGODB_URI=mongodb+srv://username:password@cluster0.xxxxx.mongodb.net/?appName=Cluster0
+
+   # NextAuth Configuration
+   NEXTAUTH_URL=http://localhost:3000
+   # Generate this with: openssl rand -base64 32
+   NEXTAUTH_SECRET=your_generated_secret_here
+
+   # Google OAuth Credentials (from Step 3, optional)
+   GOOGLE_CLIENT_ID=your_google_client_id.apps.googleusercontent.com
+   GOOGLE_CLIENT_SECRET=GOCSPX-your_google_client_secret
+
+   # Email Configuration (for OTP verification)
+   EMAIL_USER=your_gmail_address@gmail.com
+   # Generate Gmail App Password: https://myaccount.google.com/apppasswords
+   EMAIL_PASS=your_16_char_app_password
+   ```
+
+2. **Generate NEXTAUTH_SECRET**
+
+   Run this command in your terminal:
+   ```bash
+   # Windows (PowerShell)
+   -join ((65..90) + (97..122) + (48..57) | Get-Random -Count 32 | ForEach-Object {[char]$_})
+
+   # macOS/Linux
+   openssl rand -base64 32
+   ```
+
+   Copy the output and paste it as your `NEXTAUTH_SECRET` value.
+
+3. **Setup Gmail App Password (for EMAIL_PASS)**
+
+   - Go to [Google Account Security](https://myaccount.google.com/security)
+   - Enable "2-Step Verification" if not already enabled
+   - Search for "App Passwords"
+   - Select "Mail" and "Other (Custom name)"
+   - Enter "MediAssist" and click "Generate"
+   - Copy the 16-character password (remove spaces)
+   - Paste it as your `EMAIL_PASS` value
+
+### Step 7: Running the Application
+
+You need TWO terminal windows open simultaneously.
+
+**Terminal 1: Start the Backend Server**
 
 ```bash
 cd server
-python -m venv venv
+# Make sure virtual environment is activated
+# Windows: venv\Scripts\activate
+# macOS/Linux: source venv/bin/activate
 
-# Windows
-venv\Scripts\activate
-# macOS/Linux
-source venv/bin/activate
-
-pip install -r requirements.txt
-```
-
-#### 2. Client Setup
-
-The frontend provides the user interface and handles authentication/database interactions.
-
-```bash
-cd client
-npm install
-```
-
-### Configuration
-
-Create a `.env.local` file in the `client` directory with the following variables:
-
-```env
-# Database Connection
-MONGODB_URI=your_mongodb_connection_string
-
-# NextAuth Configuration
-NEXTAUTH_URL=http://localhost:3000
-NEXTAUTH_SECRET=your_random_secret_key
-
-# Google OAuth (Optional, for Google Login)
-GOOGLE_CLIENT_ID=your_google_client_id
-GOOGLE_CLIENT_SECRET=your_google_client_secret
-```
-
-### Running the Application
-
-**Start the Backend Server**
-Open a terminal in the `server` directory:
-
-```bash
 python app.py
 ```
 
-The API will run on `http://localhost:5000`. Interactive API documentation (Swagger UI) is available at `http://localhost:5000/docs`.
+You should see:
+```
+MediAssist API Starting...
+Preloading models and scalers...
+  - diabetes model and scaler loaded
+  - heart_disease model and scaler loaded
+  - parkinsons model and scaler loaded
+MediAssist API Ready on http://localhost:5000
+API Docs available at http://localhost:5000/docs
+```
 
-**Start the Frontend Client**
-Open a new terminal in the `client` directory:
+**Terminal 2: Start the Frontend Client**
 
 ```bash
+cd client
+
 npm run dev
 ```
 
-The application will be accessible at `http://localhost:3000`.
+You should see:
+```
+- Local:        http://localhost:3000
+- Ready in 2.3s
+```
+
+### Step 8: Access the Application
+
+1. **Open your browser** and go to: `http://localhost:3000`
+2. **Test the API** by visiting: `http://localhost:5000/docs` (Swagger UI)
+
+### Step 9: Create Your First Account
+
+1. Click "Register" on the homepage
+2. Fill in your details
+3. Check your email for OTP verification code
+4. Enter OTP and complete registration
+5. Login and start making predictions
+
+## Common Issues & Solutions
+
+### Issue 1: "Module not found" errors in Python
+
+**Solution:**
+```bash
+cd server
+pip install -r requirements.txt --upgrade
+```
+
+### Issue 2: "Cannot find module 'next'" in Node.js
+
+**Solution:**
+```bash
+cd client
+rm -rf node_modules package-lock.json
+npm install
+```
+
+### Issue 3: MongoDB connection fails
+
+**Solution:**
+- Check your MONGODB_URI is correct
+- Ensure you replaced `<password>` with your actual password
+- Verify IP address 0.0.0.0/0 is allowed in MongoDB Atlas Network Access
+- Check your internet connection
+
+### Issue 4: Google OAuth not working
+
+**Solution:**
+- Verify redirect URIs match exactly in Google Cloud Console
+- Make sure NEXTAUTH_URL is `http://localhost:3000` (no trailing slash)
+- Clear browser cookies and try again
+
+### Issue 5: Email OTP not sending
+
+**Solution:**
+- Verify EMAIL_USER and EMAIL_PASS are correct
+- Make sure you're using a Gmail App Password, not your regular password
+- Check if 2-Step Verification is enabled on your Google Account
+- Try generating a new App Password
+
+### Issue 6: Port already in use
+
+**Backend (Port 5000):**
+```bash
+# Windows
+netstat -ano | findstr :5000
+taskkill /PID <PID> /F
+
+# macOS/Linux
+lsof -ti:5000 | xargs kill -9
+```
+
+**Frontend (Port 3000):**
+```bash
+# Windows
+netstat -ano | findstr :3000
+taskkill /PID <PID> /F
+
+# macOS/Linux
+lsof -ti:3000 | xargs kill -9
+```
+
+## Development Workflow
+
+### Making Changes
+
+1. **Backend changes** (FastAPI/Python):
+   - Edit files in `server/`
+   - Server auto-reloads (if using `--reload` flag)
+
+2. **Frontend changes** (Next.js/TypeScript):
+   - Edit files in `client/`
+   - Next.js auto-reloads in browser
+
+### Testing
+
+**Test Backend API:**
+```bash
+cd server
+python -c "from app import app; print('Backend imports successfully')"
+```
+
+**Test Frontend Build:**
+```bash
+cd client
+npm run build
+```
+
+### Stopping the Application
+
+Press `Ctrl+C` in both terminal windows to stop the servers.
 
 ## Project Structure
 
