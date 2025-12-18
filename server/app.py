@@ -64,5 +64,8 @@ def index():
 # Run with: uvicorn app:app --host 0.0.0.0 --port 5000 --reload
 if __name__ == '__main__':
     import uvicorn
-    print("\nStarting MediAssist API...")
-    uvicorn.run("app:app", host="0.0.0.0", port=5000, reload=True)
+    import os
+    
+    port = int(os.environ.get("PORT", 5000))
+    print(f"\nStarting MediAssist API on port {port}...")
+    uvicorn.run("app:app", host="0.0.0.0", port=port, reload=True)
