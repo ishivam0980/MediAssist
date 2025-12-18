@@ -4,9 +4,10 @@ numpy
 scikit-learn
 xgboost
 
-# Flask - ONLY for ML model API endpoints
-Flask
-Flask-CORS
+# FastAPI
+fastapi
+uvicorn[standard]
+pydantic
 
 # Model Serialization
 joblib

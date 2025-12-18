@@ -8,6 +8,7 @@
    python app.py
    ```
    API will run on `http://localhost:5000`
+   Interactive Docs: `http://localhost:5000/docs`
 
 2. **Test the API:**
    Visit `http://localhost:5000` in your browser
@@ -127,7 +128,7 @@ All prediction endpoints return:
 
 ```
 server/
-├── app.py              # Main Flask app
+├── app.py              # Main FastAPI app
 ├── helpers.py          # Validation & utilities
 ├── routes/
 │   └── predictions.py  # API endpoints
@@ -135,4 +136,4 @@ server/
 └── data/              # Datasets
 ```
 
-That's it! Simple and functional. 🚀
+That's it! Simple and functional.

@@ -1,50 +1,68 @@
 """
-MediAssist Flask API - Simple and Clean
+MediAssist FastAPI
 """
 
-from flask import Flask, jsonify
-from flask_cors import CORS
-import os
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from contextlib import asynccontextmanager
 
 # Import prediction routes
-from routes.predictions import predictions_bp
+from routes.predictions import router as predictions_router
+from helpers import preload_all_models
 
 
-# Initialize Flask app
-app = Flask(__name__)
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Startup and shutdown events"""
+    # Startup: Preload models
+    print("\nMediAssist API Starting...")
+    preload_all_models()
+    print("MediAssist API Ready on http://localhost:5000")
+    print("API Docs available at http://localhost:5000/docs\n")
+    yield
+    # Shutdown
+    print("\nMediAssist API Shutting down...")
 
-# Simple CORS setup - allow requests from frontend
-CORS(app, origins=['http://localhost:3000', 'http://localhost:3001'])
+
+# Initialize FastAPI app
+app = FastAPI(
+    title="MediAssist API",
+    description="AI-powered disease prediction API for Diabetes, Heart Disease, and Parkinson's Disease",
+    version="1.0.0",
+    lifespan=lifespan
+)
+
+# CORS setup - allow requests from frontend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000", "http://localhost:3001"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Register prediction routes
-app.register_blueprint(predictions_bp)
+app.include_router(predictions_router)
 
 
-@app.route('/')
+@app.get("/")
 def index():
     """API home page"""
-    return jsonify({
+    return {
         "message": "MediAssist API",
+        "version": "1.0.0",
+        "docs": "/docs",
         "endpoints": {
             "health": "GET /api/health",
             "predict_diabetes": "POST /api/predict/diabetes",
             "predict_heart_disease": "POST /api/predict/heart-disease",
             "predict_parkinsons": "POST /api/predict/parkinsons"
         }
-    })
+    }
 
 
-@app.errorhandler(404)
-def not_found(error):
-    return jsonify({"error": "Endpoint not found"}), 404
-
-
-@app.errorhandler(500)
-def internal_error(error):
-    return jsonify({"error": "Internal server error"}), 500
-
-
+# Run with: uvicorn app:app --host 0.0.0.0 --port 5000 --reload
 if __name__ == '__main__':
-    print("\nMediAssist API Running on http://localhost:5000")
-    print("Press CTRL+C to stop\n")
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    import uvicorn
+    print("\nStarting MediAssist API...")
+    uvicorn.run("app:app", host="0.0.0.0", port=5000, reload=True)
