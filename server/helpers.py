@@ -15,6 +15,7 @@ import os
 import pandas as pd
 import numpy as np
 from datetime import datetime
+import shap
 
 
 # Global cache to store loaded models and scalers (avoid reloading on every request)
@@ -519,3 +520,70 @@ def preload_all_models():
             print(f"  ✗ Failed to load {disease} resources: {str(e)}")
     
     print("Model preloading complete\n")
+
+
+# SHAP Explainer Cache
+SHAP_EXPLAINER_CACHE = {}
+
+
+def calculate_shap_values(model, features_df, feature_names, disease_name, top_n=3):
+    """
+    Calculate SHAP values for a single prediction to explain feature importance.
+    Uses the general Explainer class which auto-selects the best algorithm.
+    
+    Args:
+        model: Trained model (XGBoost, RandomForest, etc.)
+        features_df (DataFrame): Scaled features for the prediction (single row)
+        feature_names (list): List of feature names
+        disease_name (str): Disease identifier for caching explainer
+        top_n (int): Number of top contributing features to return
+        
+    Returns:
+        list: Top N features sorted by absolute SHAP impact
+              Each item: {"feature": str, "impact": float, "direction": "positive"|"negative"}
+    """
+    try:
+        # Use cached explainer or create new one
+        if disease_name not in SHAP_EXPLAINER_CACHE:
+            # Use general Explainer which auto-selects TreeExplainer/etc.
+            print(f"Creating SHAP explainer for {disease_name}...")
+            SHAP_EXPLAINER_CACHE[disease_name] = shap.Explainer(model)
+            print(f"SHAP explainer created for {disease_name}")
+        
+        explainer = SHAP_EXPLAINER_CACHE[disease_name]
+        
+        # Calculate SHAP values for this single prediction
+        shap_values = explainer(features_df)
+        
+        # Extract values - shap_values.values is a numpy array
+        values = shap_values.values[0]
+        
+        # For multi-class output, we need to handle it differently
+        if len(values.shape) > 1:
+            # Use the positive class (class 1) values
+            values = values[:, 1] if values.shape[1] > 1 else values[:, 0]
+        
+        # Create feature importance list
+        feature_importance = []
+        for i, (name, value) in enumerate(zip(feature_names, values)):
+            feature_importance.append({
+                "feature": name,
+                "impact": round(abs(float(value)), 4),
+                "raw_value": round(float(value), 4),
+                "direction": "increases risk" if value > 0 else "decreases risk"
+            })
+        
+        # Sort by absolute impact (highest first)
+        feature_importance.sort(key=lambda x: x["impact"], reverse=True)
+        
+        print(f"SHAP values calculated successfully for {disease_name}: {len(feature_importance)} features")
+        
+        # Return top N features
+        return feature_importance[:top_n]
+        
+    except Exception as e:
+        print(f"SHAP calculation error for {disease_name}: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        # Return empty list if SHAP fails (graceful degradation)
+        return []

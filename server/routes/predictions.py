@@ -19,7 +19,8 @@ from helpers import (
     validate_diabetes_input,
     validate_heart_disease_input,
     validate_parkinsons_input,
-    format_prediction_response
+    format_prediction_response,
+    calculate_shap_values
 )
 
 router = APIRouter()
@@ -205,7 +206,11 @@ def predict_diabetes(data: DiabetesInput):
         prediction = model.predict(features)[0]
         probability = model.predict_proba(features)[0]
         
+        # Calculate SHAP values for explainability
+        feature_importance = calculate_shap_values(model, features, feature_order, 'diabetes')
+        
         response = format_prediction_response(prediction, probability, 'diabetes')
+        response['feature_importance'] = feature_importance
         return response
         
     except HTTPException:
@@ -242,7 +247,11 @@ def predict_heart_disease(data: HeartDiseaseInput):
         prediction = model.predict(features)[0]
         probability = model.predict_proba(features)[0]
         
+        # Calculate SHAP values for explainability
+        feature_importance = calculate_shap_values(model, features, feature_order, 'heart_disease')
+        
         response = format_prediction_response(prediction, probability, 'heart_disease')
+        response['feature_importance'] = feature_importance
         return response
         
     except HTTPException:
@@ -286,7 +295,11 @@ def predict_parkinsons(data: ParkinsonsInput):
         prediction = model.predict(features)[0]
         probability = model.predict_proba(features)[0]
         
+        # Calculate SHAP values for explainability
+        feature_importance = calculate_shap_values(model, features, feature_order, 'parkinsons')
+        
         response = format_prediction_response(prediction, probability, 'parkinsons')
+        response['feature_importance'] = feature_importance
         return response
         
     except HTTPException:

@@ -14,3 +14,6 @@ joblib
 
 # Environment Variables
 python-dotenv
+
+# Explainable AI
+shap
