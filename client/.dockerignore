@@ -1,0 +1,22 @@
+# Dependency directories
+node_modules
+.next
+
+# Build output
+.next/cache
+
+# Environment files
+.env
+.env.local
+.env*.local
+
+# Debug logs
+npm-debug.log*
+
+# IDE
+.idea
+.vscode
+
+# OS files
+.DS_Store
+Thumbs.db

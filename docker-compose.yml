@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  # MongoDB Database
+  mongodb:
+    image: mongo:7
+    container_name: mediassist-db
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      - MONGO_INITDB_DATABASE=mediassist
+    networks:
+      - mediassist-network
+
+  # Python FastAPI Backend (ML Predictions)
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: mediassist-server
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+    depends_on:
+      - mongodb
+    networks:
+      - mediassist-network
+
+  # Next.js Frontend
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: mediassist-client
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://server:5000
+      - MONGODB_URI=mongodb://mongodb:27017/mediassist
+    depends_on:
+      - server
+      - mongodb
+    networks:
+      - mediassist-network
+
+volumes:
+  mongodb_data:
+
+networks:
+  mediassist-network:
+    driver: bridge
