@@ -1,5 +1,7 @@
 # MediAssist
 
+**Live Demo:** [https://medi-assist-mu.vercel.app/](https://medi-assist-mu.vercel.app/)
+
 MediAssist is a comprehensive healthcare platform designed to provide early risk assessment for multiple diseases using machine learning. The application combines a modern, responsive frontend with a robust Python-based backend to deliver real-time predictions for Diabetes, Heart Disease, and Parkinson's Disease.
 
 ## Key Features
