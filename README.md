@@ -12,10 +12,21 @@ MediAssist is a comprehensive healthcare platform designed to provide early risk
 - **Heart Disease Detection**: Evaluates cardiovascular metrics including Chest Pain type, Blood Pressure, and Cholesterol.
 - **Parkinson's Disease Analysis**: Processes complex vocal and motor features for early detection.
 
+### Explainable AI (SHAP Integration)
+
+- **Top Contributing Factors**: Every prediction displays the top 3 health factors that most influenced the result using SHAP (SHapley Additive exPlanations).
+- **Directional Indicators**: Visual indicators show whether each factor increases or decreases risk.
+- **Model Transparency**: Eliminates the "black box" problem by explaining *why* the model made its prediction.
+
+### Interactive Health Dashboard
+
+- **Health Trend Visualization**: Interactive line charts (built with Recharts) track risk probability over time.
+- **Multi-Disease Support**: Separate trend lines for Diabetes, Heart Disease, and Parkinson's assessments.
+- **Responsive Design**: Charts adapt to screen size with smooth animations and dark mode support.
+
 ### User Experience
 
 - **Secure Authentication**: Supports both Email/Password and Google OAuth login. Includes intelligent account linking to merge profiles seamlessly.
-- **Interactive Dashboard**: Visualizes prediction history and health trends using dynamic charts.
 - **Profile Management**: Allows users to update personal details which are automatically pre-filled in prediction forms.
 - **History Tracking**: Stores all past predictions securely, allowing users to review their health assessment timeline.
 
@@ -142,6 +153,69 @@ The application utilizes high-performance machine learning models trained on val
 
 *Note: All metrics are calculated on the held-out test set (20% of data) that was never seen during training.*
 
+## System Architecture
+
+### Model Management (Singleton Pattern)
+
+The backend implements the **Singleton Design Pattern** for ML model management through the `ModelManager` class:
+
+```python
+class ModelManager:
+    """Singleton Pattern for ML model management."""
+    _instance = None
+    _models = {}
+    _scalers = {}
+    _shap_explainers = {}
+    
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
+```
+
+**Benefits:**
+- **Reduced Latency**: Models are loaded once at startup, not on every request
+- **Memory Efficiency**: Single instance prevents duplicate model copies
+- **Thread Safety**: Consistent caching across concurrent requests
+
+### Explainable AI Pipeline
+
+Every prediction flows through a SHAP explainability layer:
+
+```
+User Input → Pydantic Validation → Model Prediction → SHAP Analysis → Response
+                                        ↓                   ↓
+                                   Probability        Top 3 Factors
+```
+
+**SHAP Integration:**
+1. `shap.Explainer` auto-selects optimal algorithm (TreeExplainer for XGBoost)
+2. Computes feature importance for the specific prediction
+3. Returns sorted list of contributing factors with directional impact
+
+### API Response Structure
+
+```json
+{
+  "success": true,
+  "disease": "diabetes",
+  "prediction": {
+    "has_disease": 1,
+    "confidence": 78.5,
+    "probability": 0.785
+  },
+  "risk_assessment": {
+    "level": "High",
+    "message": "Immediate consultation recommended..."
+  },
+  "feature_importance": [
+    {"feature": "HbA1c", "impact": 0.45, "direction": "increases risk"},
+    {"feature": "BMI", "impact": 0.32, "direction": "increases risk"},
+    {"feature": "Age", "impact": 0.18, "direction": "increases risk"}
+  ]
+}
+```
+
 ## Technology Stack
 
 **Frontend (Client)**
@@ -150,7 +224,7 @@ The application utilizes high-performance machine learning models trained on val
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
 - **Authentication**: NextAuth.js (Email/Password + Google OAuth)
-- **Visualization**: Recharts
+- **Visualization**: Recharts (Interactive health trend charts)
 - **HTTP Client**: Fetch API
 
 **Backend (Server)**
@@ -158,13 +232,51 @@ The application utilizes high-performance machine learning models trained on val
 - **Framework**: FastAPI (Python web framework)
 - **Language**: Python 3.11+
 - **Machine Learning**: Scikit-learn, XGBoost, Pandas, NumPy
+- **Explainability**: SHAP (SHapley Additive exPlanations)
+- **Model Management**: Singleton Pattern (ModelManager class)
 - **Model Serialization**: Joblib
-- **Validation**: Pydantic
+- **Validation**: Pydantic with Field validators
 
 **Database**
 
 - **Primary DB**: MongoDB Atlas (Cloud-hosted)
 - **ODM**: Mongoose (for Next.js API routes)
+
+**DevOps & Infrastructure**
+
+- **Containerization**: Docker & Docker Compose
+- **Services**: MongoDB, FastAPI, Next.js orchestrated together
+- **Deployment**: Vercel (Frontend), Render/Railway (Backend)
+
+## Quick Start with Docker
+
+The fastest way to run the entire application locally using Docker Compose:
+
+```bash
+# Clone the repository
+git clone https://github.com/ishivam0980/MediAssist.git
+cd MediAssist
+
+# Start all services (MongoDB + FastAPI + Next.js)
+docker-compose up --build
+
+# Access the application
+# Frontend: http://localhost:3000
+# Backend API: http://localhost:5000
+# API Docs: http://localhost:5000/docs
+```
+
+**Services Orchestrated:**
+| Service | Port | Description |
+|---------|------|-------------|
+| `client` | 3000 | Next.js Frontend |
+| `server` | 5000 | FastAPI ML Backend |
+| `mongodb` | 27017 | MongoDB Database |
+
+**Stop all services:**
+```bash
+docker-compose down
+```
 
 ## Getting Started
 
