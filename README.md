@@ -26,9 +26,15 @@ MediAssist is a comprehensive healthcare platform designed to provide early risk
 
 ### User Experience
 
-- **Secure Authentication**: Supports both Email/Password and Google OAuth login. Includes intelligent account linking to merge profiles seamlessly.
 - **Profile Management**: Allows users to update personal details which are automatically pre-filled in prediction forms.
 - **History Tracking**: Stores all past predictions securely, allowing users to review their health assessment timeline.
+
+### Security & Authentication
+
+- **Multi-Provider OAuth**: Supports Google OAuth 2.0 and Email/Password with NextAuth.js. Intelligent account linking automatically merges Google and email-based profiles.
+- **OTP Email Verification**: 6-digit OTP sent via Nodemailer with 5-minute TTL auto-expiry using MongoDB TTL indexes.
+- **Password Security**: Passwords hashed using bcrypt with salt rounds. Fields marked with `select: false` to prevent accidental exposure in queries.
+- **Session Management**: Custom NextAuth callbacks for session enrichment with user profile data from MongoDB.
 
 ## Proposed Methodology
 
@@ -166,7 +172,7 @@ class ModelManager:
     _models = {}
     _scalers = {}
     _shap_explainers = {}
-    
+  
     def __new__(cls):
         if cls._instance is None:
             cls._instance = super().__new__(cls)
@@ -174,6 +180,7 @@ class ModelManager:
 ```
 
 **Benefits:**
+
 - **Reduced Latency**: Models are loaded once at startup, not on every request
 - **Memory Efficiency**: Single instance prevents duplicate model copies
 - **Thread Safety**: Consistent caching across concurrent requests
@@ -189,6 +196,7 @@ User Input → Pydantic Validation → Model Prediction → SHAP Analysis → Re
 ```
 
 **SHAP Integration:**
+
 1. `shap.Explainer` auto-selects optimal algorithm (TreeExplainer for XGBoost)
 2. Computes feature importance for the specific prediction
 3. Returns sorted list of contributing factors with directional impact
@@ -267,13 +275,15 @@ docker-compose up --build
 ```
 
 **Services Orchestrated:**
-| Service | Port | Description |
-|---------|------|-------------|
-| `client` | 3000 | Next.js Frontend |
-| `server` | 5000 | FastAPI ML Backend |
-| `mongodb` | 27017 | MongoDB Database |
+
+| Service     | Port  | Description        |
+| ----------- | ----- | ------------------ |
+| `client`  | 3000  | Next.js Frontend   |
+| `server`  | 5000  | FastAPI ML Backend |
+| `mongodb` | 27017 | MongoDB Database   |
 
 **Stop all services:**
+
 ```bash
 docker-compose down
 ```
@@ -300,30 +310,31 @@ cd MediAssist
 ### Step 2: MongoDB Atlas Setup
 
 1. **Create a MongoDB Atlas Account**
+
    - Go to [MongoDB Atlas](https://www.mongodb.com/cloud/atlas/register)
    - Sign up for a free account
-
 2. **Create a New Cluster**
+
    - Click "Build a Database"
    - Choose the FREE tier (M0 Sandbox)
    - Select a cloud provider and region close to you
    - Click "Create Cluster" (takes 3-5 minutes)
-
 3. **Create Database User**
+
    - Go to "Database Access" in the left sidebar
    - Click "Add New Database User"
    - Choose "Password" authentication
    - Set username and password (save these!)
    - Set role to "Read and write to any database"
    - Click "Add User"
-
 4. **Allow Network Access**
+
    - Go to "Network Access" in the left sidebar
    - Click "Add IP Address"
    - Click "Allow Access from Anywhere" (0.0.0.0/0)
    - Click "Confirm"
-
 5. **Get Connection String**
+
    - Go to "Database" in the left sidebar
    - Click "Connect" on your cluster
    - Choose "Connect your application"
@@ -335,15 +346,16 @@ cd MediAssist
 Skip this if you only want email/password login.
 
 1. **Go to Google Cloud Console**
+
    - Visit [Google Cloud Console](https://console.cloud.google.com/)
    - Create a new project or select existing one
-
 2. **Enable Google+ API**
+
    - Go to "APIs & Services" > "Library"
    - Search for "Google+ API"
    - Click "Enable"
-
 3. **Create OAuth Credentials**
+
    - Go to "APIs & Services" > "Credentials"
    - Click "Create Credentials" > "OAuth Client ID"
    - Configure consent screen if prompted
@@ -359,11 +371,12 @@ Skip this if you only want email/password login.
 ### Step 4: Backend (Server) Setup
 
 1. **Navigate to server directory**
+
    ```bash
    cd server
    ```
-
 2. **Create Python virtual environment**
+
    ```bash
    # Windows
    python -m venv venv
@@ -373,13 +386,13 @@ Skip this if you only want email/password login.
    python3 -m venv venv
    source venv/bin/activate
    ```
-
 3. **Install Python dependencies**
+
    ```bash
    pip install -r requirements.txt
    ```
-
 4. **Verify installation**
+
    ```bash
    python -c "import fastapi, uvicorn; print('FastAPI installed successfully')"
    ```
@@ -387,16 +400,17 @@ Skip this if you only want email/password login.
 ### Step 5: Frontend (Client) Setup
 
 1. **Open a NEW terminal and navigate to client directory**
+
    ```bash
    cd client
    ```
-
 2. **Install Node.js dependencies**
+
    ```bash
    npm install
    ```
-
 3. **Verify installation**
+
    ```bash
    npm list next
    ```
@@ -428,10 +442,10 @@ Skip this if you only want email/password login.
    # Generate Gmail App Password: https://myaccount.google.com/apppasswords
    EMAIL_PASS=your_16_char_app_password
    ```
-
 2. **Generate NEXTAUTH_SECRET**
 
    Run this command in your terminal:
+
    ```bash
    # Windows (PowerShell)
    -join ((65..90) + (97..122) + (48..57) | Get-Random -Count 32 | ForEach-Object {[char]$_})
@@ -441,7 +455,6 @@ Skip this if you only want email/password login.
    ```
 
    Copy the output and paste it as your `NEXTAUTH_SECRET` value.
-
 3. **Setup Gmail App Password (for EMAIL_PASS)**
 
    - Go to [Google Account Security](https://myaccount.google.com/security)
@@ -468,6 +481,7 @@ python app.py
 ```
 
 You should see:
+
 ```
 MediAssist API Starting...
 Preloading models and scalers...
@@ -487,6 +501,7 @@ npm run dev
 ```
 
 You should see:
+
 ```
 - Local:        http://localhost:3000
 - Ready in 2.3s
@@ -510,6 +525,7 @@ You should see:
 ### Issue 1: "Module not found" errors in Python
 
 **Solution:**
+
 ```bash
 cd server
 pip install -r requirements.txt --upgrade
@@ -518,6 +534,7 @@ pip install -r requirements.txt --upgrade
 ### Issue 2: "Cannot find module 'next'" in Node.js
 
 **Solution:**
+
 ```bash
 cd client
 rm -rf node_modules package-lock.json
@@ -527,6 +544,7 @@ npm install
 ### Issue 3: MongoDB connection fails
 
 **Solution:**
+
 - Check your MONGODB_URI is correct
 - Ensure you replaced `<password>` with your actual password
 - Verify IP address 0.0.0.0/0 is allowed in MongoDB Atlas Network Access
@@ -535,6 +553,7 @@ npm install
 ### Issue 4: Google OAuth not working
 
 **Solution:**
+
 - Verify redirect URIs match exactly in Google Cloud Console
 - Make sure NEXTAUTH_URL is `http://localhost:3000` (no trailing slash)
 - Clear browser cookies and try again
@@ -542,6 +561,7 @@ npm install
 ### Issue 5: Email OTP not sending
 
 **Solution:**
+
 - Verify EMAIL_USER and EMAIL_PASS are correct
 - Make sure you're using a Gmail App Password, not your regular password
 - Check if 2-Step Verification is enabled on your Google Account
@@ -550,6 +570,7 @@ npm install
 ### Issue 6: Port already in use
 
 **Backend (Port 5000):**
+
 ```bash
 # Windows
 netstat -ano | findstr :5000
@@ -560,6 +581,7 @@ lsof -ti:5000 | xargs kill -9
 ```
 
 **Frontend (Port 3000):**
+
 ```bash
 # Windows
 netstat -ano | findstr :3000
@@ -574,22 +596,25 @@ lsof -ti:3000 | xargs kill -9
 ### Making Changes
 
 1. **Backend changes** (FastAPI/Python):
+
    - Edit files in `server/`
    - Server auto-reloads (if using `--reload` flag)
-
 2. **Frontend changes** (Next.js/TypeScript):
+
    - Edit files in `client/`
    - Next.js auto-reloads in browser
 
 ### Testing
 
 **Test Backend API:**
+
 ```bash
 cd server
 python -c "from app import app; print('Backend imports successfully')"
 ```
 
 **Test Frontend Build:**
+
 ```bash
 cd client
 npm run build
@@ -616,3 +641,33 @@ Press `Ctrl+C` in both terminal windows to stop the servers.
 ## Disclaimer
 
 **MediAssist is an educational tool and is not intended to replace professional medical advice, diagnosis, or treatment.** The predictions provided by this application are based on statistical models and should be used for informational purposes only. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition.
+
+---
+
+## Technical Highlights 
+
+This project demonstrates proficiency in the following technologies and concepts:
+
+**Frontend Development:**
+`Next.js 16` · `React 19` · `TypeScript` · `App Router` · `Server Components` · `Tailwind CSS` · `Framer Motion` · `Recharts` · `Responsive Design` · `Dark Mode`
+
+**Backend Development:**
+`Python` · `FastAPI` · `REST API` · `Pydantic Validation` · `Uvicorn` · `Hot Reload` · `CORS`
+
+**Machine Learning & AI:**
+`Scikit-learn` · `XGBoost` · `Random Forest` · `Logistic Regression` · `SVM` · `SHAP` · `Explainable AI (XAI)` · `Feature Engineering` · `Model Evaluation` · `F1 Score` · `ROC-AUC`
+
+**Database & ORM:**
+`MongoDB Atlas` · `Mongoose ODM` · `TTL Indexes` · `Document Expiry` · `NoSQL`
+
+**Authentication & Security:**
+`NextAuth.js` · `OAuth 2.0` · `Google Provider` · `Credentials Provider` · `bcrypt` · `Password Hashing` · `OTP Verification` · `Session Management`
+
+**DevOps & Infrastructure:**
+`Docker` · `Docker Compose` · `Multi-stage Builds` · `Container Orchestration` · `Vercel` · `Git` · `GitHub`
+
+**Design Patterns:**
+`Singleton Pattern` · `MVC Architecture` · `API Gateway Pattern` · `Caching Strategy`
+
+**Software Engineering Practices:**
+`Clean Code` · `Type Safety` · `Input Validation` · `Error Handling` · `Graceful Degradation` · `Code Documentation`
