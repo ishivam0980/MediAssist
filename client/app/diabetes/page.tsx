@@ -14,8 +14,8 @@ export default function DiabetesPage() {
   const [result, setResult] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
-    AGE: "",
     Gender: "1", // Default Male
+    AGE: "",
     Urea: "",
     Cr: "",
     HbA1c: "",
@@ -74,8 +74,8 @@ export default function DiabetesPage() {
     setResult(null);
     setError(null);
     setFormData({
-      AGE: "",
       Gender: "1",
+      AGE: "",
       Urea: "",
       Cr: "",
       HbA1c: "",
@@ -127,177 +127,160 @@ export default function DiabetesPage() {
                 <span className="font-medium">Error:</span> {error}
               </div>
             )}
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-              {/* Personal Info */}
-              <div className="md:col-span-3 space-y-4">
-                <h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100 border-b border-neutral-200 dark:border-neutral-800 pb-2">
-                  Personal Information
-                </h3>
-                
-                <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Age (years)</label>
-                  <input
-                    type="number"
-                    name="AGE"
-                    required
-                    min="0"
-                    max="120"
-                    value={formData.AGE}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-blue-500 outline-none transition-all text-sm"
-                    placeholder="e.g. 45"
-                  />
-                </div>
-
-                <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Gender</label>
-                  <select
-                    name="Gender"
-                    value={formData.Gender}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-blue-500 outline-none transition-all text-sm"
-                  >
-                    <option value="1">Male</option>
-                    <option value="0">Female</option>
-                  </select>
-                </div>
-
-                <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">BMI</label>
-                  <input
-                    type="number"
-                    name="BMI"
-                    required
-                    step="0.1"
-                    value={formData.BMI}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-blue-500 outline-none transition-all text-sm"
-                    placeholder="e.g. 24.5"
-                  />
-                </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              
+              <div className="space-y-1.5">
+                <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Gender</label>
+                <select
+                  name="Gender"
+                  value={formData.Gender}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-blue-500 outline-none transition-all text-sm"
+                >
+                  <option value="1">Male</option>
+                  <option value="0">Female</option>
+                </select>
               </div>
 
-              {/* Clinical Data */}
-              <div className="md:col-span-4 space-y-4">
-                <h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100 border-b border-neutral-200 dark:border-neutral-800 pb-2">
-                  Clinical Data
-                </h3>
-
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">HbA1c</label>
-                    <input
-                      type="number"
-                      name="HbA1c"
-                      required
-                      step="0.1"
-                      value={formData.HbA1c}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-blue-500 outline-none transition-all text-sm"
-                      placeholder="e.g. 5.7"
-                    />
-                  </div>
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Urea</label>
-                    <input
-                      type="number"
-                      name="Urea"
-                      required
-                      step="0.1"
-                      value={formData.Urea}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-blue-500 outline-none transition-all text-sm"
-                      placeholder="mg/dL"
-                    />
-                  </div>
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Creatinine (Cr)</label>
-                    <input
-                      type="number"
-                      name="Cr"
-                      required
-                      step="0.1"
-                      value={formData.Cr}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-blue-500 outline-none transition-all text-sm"
-                      placeholder="mg/dL"
-                    />
-                  </div>
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Cholesterol</label>
-                    <input
-                      type="number"
-                      name="Chol"
-                      required
-                      step="0.1"
-                      value={formData.Chol}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-blue-500 outline-none transition-all text-sm"
-                      placeholder="mg/dL"
-                    />
-                  </div>
-                </div>
+              <div className="space-y-1.5">
+                <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Age (years) [AGE]</label>
+                <input
+                  type="number"
+                  name="AGE"
+                  required
+                  min="0"
+                  max="120"
+                  value={formData.AGE}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-blue-500 outline-none transition-all text-sm"
+                  placeholder="e.g. 45"
+                />
               </div>
 
-              {/* Lipid Profile */}
-              <div className="md:col-span-5 space-y-4">
-                <h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100 border-b border-neutral-200 dark:border-neutral-800 pb-2">
-                  Lipid Profile
-                </h3>
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">TG</label>
-                    <input
-                      type="number"
-                      name="TG"
-                      required
-                      step="0.1"
-                      value={formData.TG}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-blue-500 outline-none transition-all text-sm"
-                      placeholder="Triglycerides"
-                    />
-                  </div>
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">HDL</label>
-                    <input
-                      type="number"
-                      name="HDL"
-                      required
-                      step="0.1"
-                      value={formData.HDL}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-blue-500 outline-none transition-all text-sm"
-                      placeholder="High Density"
-                    />
-                  </div>
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">LDL</label>
-                    <input
-                      type="number"
-                      name="LDL"
-                      required
-                      step="0.1"
-                      value={formData.LDL}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-blue-500 outline-none transition-all text-sm"
-                      placeholder="Low Density"
-                    />
-                  </div>
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">VLDL</label>
-                    <input
-                      type="number"
-                      name="VLDL"
-                      required
-                      step="0.1"
-                      value={formData.VLDL}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-blue-500 outline-none transition-all text-sm"
-                      placeholder="Very Low Density"
-                    />
-                  </div>
-                </div>
+              <div className="space-y-1.5">
+                <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Urea [Urea] (mg/dL)</label>
+                <input
+                  type="number"
+                  name="Urea"
+                  required
+                  step="0.1"
+                  value={formData.Urea}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-blue-500 outline-none transition-all text-sm"
+                  placeholder="e.g. 4.5"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Creatinine [Cr] (mg/dL)</label>
+                <input
+                  type="number"
+                  name="Cr"
+                  required
+                  step="0.1"
+                  value={formData.Cr}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-blue-500 outline-none transition-all text-sm"
+                  placeholder="e.g. 60"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Hemoglobin A1c [HbA1c] (%)</label>
+                <input
+                  type="number"
+                  name="HbA1c"
+                  required
+                  step="0.1"
+                  value={formData.HbA1c}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-blue-500 outline-none transition-all text-sm"
+                  placeholder="e.g. 5.7"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Cholesterol [Chol] (mg/dL)</label>
+                <input
+                  type="number"
+                  name="Chol"
+                  required
+                  step="0.1"
+                  value={formData.Chol}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-blue-500 outline-none transition-all text-sm"
+                  placeholder="e.g. 180"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Triglycerides [TG] (mg/dL)</label>
+                <input
+                  type="number"
+                  name="TG"
+                  required
+                  step="0.1"
+                  value={formData.TG}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-blue-500 outline-none transition-all text-sm"
+                  placeholder="e.g. 150"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">High-Density Lipoprotein [HDL] (mg/dL)</label>
+                <input
+                  type="number"
+                  name="HDL"
+                  required
+                  step="0.1"
+                  value={formData.HDL}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-blue-500 outline-none transition-all text-sm"
+                  placeholder="e.g. 50"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Low-Density Lipoprotein [LDL] (mg/dL)</label>
+                <input
+                  type="number"
+                  name="LDL"
+                  required
+                  step="0.1"
+                  value={formData.LDL}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-blue-500 outline-none transition-all text-sm"
+                  placeholder="e.g. 100"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Very Low-Density Lipoprotein [VLDL] (mg/dL)</label>
+                <input
+                  type="number"
+                  name="VLDL"
+                  required
+                  step="0.1"
+                  value={formData.VLDL}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-blue-500 outline-none transition-all text-sm"
+                  placeholder="e.g. 30"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Body Mass Index [BMI] (kg/m²)</label>
+                <input
+                  type="number"
+                  name="BMI"
+                  required
+                  step="0.1"
+                  value={formData.BMI}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-blue-500 outline-none transition-all text-sm"
+                  placeholder="e.g. 24.5"
+                />
               </div>
             </div>
 

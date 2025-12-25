@@ -146,7 +146,7 @@ The application utilizes high-performance machine learning models trained on val
 
 **Frontend (Client)**
 
-- **Framework**: Next.js 14 (App Router)
+- **Framework**: Next.js 16 (App Router)
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
 - **Authentication**: NextAuth.js (Email/Password + Google OAuth)

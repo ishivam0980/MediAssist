@@ -6,7 +6,7 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import { Calendar, Activity, Trash2, Clock } from "lucide-react";
 import Link from "next/link";
-import { HistoryChart } from "@/components/HistoryChart";
+import { HealthTrendChart } from "@/components/HealthTrendChart";
 
 interface HistoryItem {
   _id?: string;
@@ -126,7 +126,7 @@ export default function DashboardPage() {
 
         {history.length > 1 && (
           <div className="mb-8">
-            <HistoryChart data={history} />
+            <HealthTrendChart data={history} />
           </div>
         )}
 

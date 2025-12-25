@@ -131,208 +131,187 @@ export default function HeartDiseasePage() {
                 <span className="font-medium">Error:</span> {error}
               </div>
             )}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               
-              {/* Patient Details */}
-              <div className="space-y-4">
-                <h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100 border-b border-neutral-200 dark:border-neutral-800 pb-2">
-                  Patient Details
-                </h3>
-                
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Age</label>
-                    <input
-                      type="number"
-                      name="age"
-                      required
-                      min="0"
-                      max="120"
-                      value={formData.age}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-rose-500 outline-none transition-all text-sm"
-                    />
-                  </div>
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Sex</label>
-                    <select
-                      name="sex"
-                      value={formData.sex}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-rose-500 outline-none transition-all text-sm"
-                    >
-                      <option value="1">Male</option>
-                      <option value="0">Female</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Chest Pain Type</label>
-                  <select
-                    name="cp"
-                    value={formData.cp}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-rose-500 outline-none transition-all text-sm"
-                  >
-                    <option value="0">Typical Angina</option>
-                    <option value="1">Atypical Angina</option>
-                    <option value="2">Non-anginal Pain</option>
-                    <option value="3">Asymptomatic</option>
-                  </select>
-                </div>
+              <div className="space-y-1.5">
+                <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Age (years)</label>
+                <input
+                  type="number"
+                  name="age"
+                  required
+                  min="0"
+                  max="120"
+                  value={formData.age}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-rose-500 outline-none transition-all text-sm"
+                  placeholder="e.g. 55"
+                />
               </div>
 
-              {/* Vitals */}
-              <div className="space-y-4">
-                <h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100 border-b border-neutral-200 dark:border-neutral-800 pb-2">
-                  Vitals & Blood Work
-                </h3>
-
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Resting BP</label>
-                    <input
-                      type="number"
-                      name="trestbps"
-                      required
-                      value={formData.trestbps}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-rose-500 outline-none transition-all text-sm"
-                      placeholder="mm Hg"
-                    />
-                  </div>
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Cholesterol</label>
-                    <input
-                      type="number"
-                      name="chol"
-                      required
-                      value={formData.chol}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-rose-500 outline-none transition-all text-sm"
-                      placeholder="mg/dl"
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Fasting Blood Sugar &gt; 120 mg/dl</label>
-                  <select
-                    name="fbs"
-                    value={formData.fbs}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-rose-500 outline-none transition-all text-sm"
-                  >
-                    <option value="0">False</option>
-                    <option value="1">True</option>
-                  </select>
-                </div>
+              <div className="space-y-1.5">
+                <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Sex</label>
+                <select
+                  name="sex"
+                  value={formData.sex}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-rose-500 outline-none transition-all text-sm"
+                >
+                  <option value="1">Male</option>
+                  <option value="0">Female</option>
+                </select>
               </div>
 
-              {/* Cardiac Metrics */}
-              <div className="space-y-4">
-                <h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100 border-b border-neutral-200 dark:border-neutral-800 pb-2">
-                  Cardiac Metrics
-                </h3>
-                
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Resting ECG</label>
-                    <select
-                      name="restecg"
-                      value={formData.restecg}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-rose-500 outline-none transition-all text-sm"
-                    >
-                      <option value="0">Normal</option>
-                      <option value="1">Abnormal</option>
-                      <option value="2">Hypertrophy</option>
-                    </select>
-                  </div>
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Max HR</label>
-                    <input
-                      type="number"
-                      name="thalach"
-                      required
-                      value={formData.thalach}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-rose-500 outline-none transition-all text-sm"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Ex. Angina</label>
-                    <select
-                      name="exang"
-                      value={formData.exang}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-rose-500 outline-none transition-all text-sm"
-                    >
-                      <option value="0">No</option>
-                      <option value="1">Yes</option>
-                    </select>
-                  </div>
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Oldpeak</label>
-                    <input
-                      type="number"
-                      name="oldpeak"
-                      required
-                      step="0.1"
-                      value={formData.oldpeak}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-rose-500 outline-none transition-all text-sm"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-3 gap-2">
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Slope</label>
-                    <select
-                      name="slope"
-                      value={formData.slope}
-                      onChange={handleInputChange}
-                      className="w-full px-2 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-rose-500 outline-none transition-all text-sm"
-                    >
-                      <option value="0">Up</option>
-                      <option value="1">Flat</option>
-                      <option value="2">Down</option>
-                    </select>
-                  </div>
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Vessels</label>
-                    <select
-                      name="ca"
-                      value={formData.ca}
-                      onChange={handleInputChange}
-                      className="w-full px-2 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-rose-500 outline-none transition-all text-sm"
-                    >
-                      <option value="0">0</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                    </select>
-                  </div>
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Thal</label>
-                    <select
-                      name="thal"
-                      value={formData.thal}
-                      onChange={handleInputChange}
-                      className="w-full px-2 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-rose-500 outline-none transition-all text-sm"
-                    >
-                      <option value="1">Norm</option>
-                      <option value="2">Fix</option>
-                      <option value="3">Rev</option>
-                    </select>
-                  </div>
-                </div>
+              <div className="space-y-1.5">
+                <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Chest Pain Type [cp]</label>
+                <select
+                  name="cp"
+                  value={formData.cp}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-rose-500 outline-none transition-all text-sm"
+                >
+                  <option value="0">Typical Angina</option>
+                  <option value="1">Atypical Angina</option>
+                  <option value="2">Non-anginal Pain</option>
+                  <option value="3">Asymptomatic</option>
+                </select>
               </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Resting Blood Pressure [trestbps] (mm Hg)</label>
+                <input
+                  type="number"
+                  name="trestbps"
+                  required
+                  value={formData.trestbps}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-rose-500 outline-none transition-all text-sm"
+                  placeholder="e.g. 120"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Serum Cholestoral [chol] (mg/dl)</label>
+                <input
+                  type="number"
+                  name="chol"
+                  required
+                  value={formData.chol}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-rose-500 outline-none transition-all text-sm"
+                  placeholder="e.g. 200"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Fasting Blood Sugar &gt; 120 mg/dl [fbs]</label>
+                <select
+                  name="fbs"
+                  value={formData.fbs}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-rose-500 outline-none transition-all text-sm"
+                >
+                  <option value="0">False</option>
+                  <option value="1">True</option>
+                </select>
+              </div>
+
+               <div className="space-y-1.5">
+                <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Resting Electrocardiographic Results [restecg]</label>
+                <select
+                  name="restecg"
+                  value={formData.restecg}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-rose-500 outline-none transition-all text-sm"
+                >
+                  <option value="0">Normal</option>
+                  <option value="1">Abnormal</option>
+                  <option value="2">Hypertrophy</option>
+                </select>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Maximum Heart Rate Achieved [thalach]</label>
+                <input
+                  type="number"
+                  name="thalach"
+                  required
+                  value={formData.thalach}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-rose-500 outline-none transition-all text-sm"
+                  placeholder="e.g. 150"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Exercise Induced Angina [exang]</label>
+                <select
+                  name="exang"
+                  value={formData.exang}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-rose-500 outline-none transition-all text-sm"
+                >
+                  <option value="0">No</option>
+                  <option value="1">Yes</option>
+                </select>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">ST Depression Induced by Exercise [oldpeak]</label>
+                <input
+                  type="number"
+                  name="oldpeak"
+                  required
+                  step="0.1"
+                  value={formData.oldpeak}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-rose-500 outline-none transition-all text-sm"
+                  placeholder="e.g. 1.5"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Slope of the Peak Exercise ST Segment [slope]</label>
+                <select
+                  name="slope"
+                  value={formData.slope}
+                  onChange={handleInputChange}
+                  className="w-full px-2 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-rose-500 outline-none transition-all text-sm"
+                >
+                  <option value="0">Up</option>
+                  <option value="1">Flat</option>
+                  <option value="2">Down</option>
+                </select>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Number of Major Vessels [ca]</label>
+                <select
+                  name="ca"
+                  value={formData.ca}
+                  onChange={handleInputChange}
+                  className="w-full px-2 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-rose-500 outline-none transition-all text-sm"
+                >
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </select>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Thalassemia [thal]</label>
+                <select
+                  name="thal"
+                  value={formData.thal}
+                  onChange={handleInputChange}
+                  className="w-full px-2 py-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-rose-500 outline-none transition-all text-sm"
+                >
+                  <option value="1">Normal</option>
+                  <option value="2">Fixed Defect</option>
+                  <option value="3">Reversable Defect</option>
+                </select>
+              </div>
+
             </div>
 
             <div className="pt-4">

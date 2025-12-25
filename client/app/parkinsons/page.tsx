@@ -14,46 +14,31 @@ export default function ParkinsonsPage() {
   const [result, setResult] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
-    // Demographics
     Age: "",
     Gender: "1",
     Ethnicity: "0",
     EducationLevel: "0",
     BMI: "",
-    
-    // Lifestyle
     Smoking: "0",
     AlcoholConsumption: "",
     PhysicalActivity: "",
     DietQuality: "",
     SleepQuality: "",
-    
-    // History
     FamilyHistoryParkinsons: "0",
     TraumaticBrainInjury: "0",
-    
-    // Medical Conditions
     Hypertension: "0",
     Diabetes: "0",
     Depression: "0",
     Stroke: "0",
-    
-    // Vitals
     SystolicBP: "",
     DiastolicBP: "",
-    
-    // Labs
     CholesterolTotal: "",
     CholesterolLDL: "",
     CholesterolHDL: "",
     CholesterolTriglycerides: "",
-    
-    // Assessments
     UPDRS: "",
     MoCA: "",
     FunctionalAssessment: "",
-    
-    // Symptoms
     Tremor: "0",
     Rigidity: "0",
     Bradykinesia: "0",
@@ -110,46 +95,31 @@ export default function ParkinsonsPage() {
     setResult(null);
     setError(null);
     setFormData({
-      // Demographics
       Age: "",
       Gender: "1",
       Ethnicity: "0",
       EducationLevel: "0",
       BMI: "",
-      
-      // Lifestyle
       Smoking: "0",
       AlcoholConsumption: "",
       PhysicalActivity: "",
       DietQuality: "",
       SleepQuality: "",
-      
-      // History
       FamilyHistoryParkinsons: "0",
       TraumaticBrainInjury: "0",
-      
-      // Medical Conditions
       Hypertension: "0",
       Diabetes: "0",
       Depression: "0",
       Stroke: "0",
-      
-      // Vitals
       SystolicBP: "",
       DiastolicBP: "",
-      
-      // Labs
       CholesterolTotal: "",
       CholesterolLDL: "",
       CholesterolHDL: "",
       CholesterolTriglycerides: "",
-      
-      // Assessments
       UPDRS: "",
       MoCA: "",
       FunctionalAssessment: "",
-      
-      // Symptoms
       Tremor: "0",
       Rigidity: "0",
       Bradykinesia: "0",
@@ -199,189 +169,267 @@ export default function ParkinsonsPage() {
                 <span className="font-medium">Error:</span> {error}
               </div>
             )}
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-              
-              {/* Column 1: Demographics & Lifestyle */}
-              <div className="space-y-6">
-                <section className="space-y-3">
-                  <h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100 border-b border-neutral-200 dark:border-neutral-800 pb-1">
-                    Demographics
-                  </h3>
-                  <div className="grid grid-cols-2 gap-2">
-                    <div className="space-y-1">
-                      <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Age</label>
-                      <input type="number" name="Age" required className="w-full px-2 py-1.5 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all text-sm" onChange={handleInputChange} />
-                    </div>
-                    <div className="space-y-1">
-                      <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Gender</label>
-                      <select name="Gender" className="w-full px-2 py-1.5 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all text-sm" onChange={handleInputChange}>
-                        <option value="1">Male</option>
-                        <option value="0">Female</option>
-                      </select>
-                    </div>
-                    <div className="space-y-1">
-                      <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">BMI</label>
-                      <input type="number" name="BMI" step="0.1" required className="w-full px-2 py-1.5 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all text-sm" onChange={handleInputChange} />
-                    </div>
-                    <div className="space-y-1">
-                      <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Ethnicity</label>
-                      <select name="Ethnicity" className="w-full px-2 py-1.5 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all text-sm" onChange={handleInputChange}>
-                        <option value="0">Cauc.</option>
-                        <option value="1">Afr. Am.</option>
-                        <option value="2">Asian</option>
-                        <option value="3">Other</option>
-                      </select>
-                    </div>
-                    <div className="col-span-2 space-y-1">
-                      <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Education</label>
-                      <select name="EducationLevel" className="w-full px-2 py-1.5 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all text-sm" onChange={handleInputChange}>
-                        <option value="0">None</option>
-                        <option value="1">High School</option>
-                        <option value="2">Bachelor's</option>
-                        <option value="3">Higher</option>
-                      </select>
-                    </div>
-                  </div>
-                </section>
-
-                <section className="space-y-3">
-                  <h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100 border-b border-neutral-200 dark:border-neutral-800 pb-1">
-                    Lifestyle
-                  </h3>
-                  <div className="grid grid-cols-2 gap-2">
-                    <div className="space-y-1">
-                      <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Alcohol</label>
-                      <input type="number" name="AlcoholConsumption" required className="w-full px-2 py-1.5 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all text-sm" onChange={handleInputChange} placeholder="Units/Wk" />
-                    </div>
-                    <div className="space-y-1">
-                      <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Activity</label>
-                      <input type="number" name="PhysicalActivity" required className="w-full px-2 py-1.5 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all text-sm" onChange={handleInputChange} placeholder="Hrs/Wk" />
-                    </div>
-                    <div className="space-y-1">
-                      <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Diet (0-10)</label>
-                      <input type="number" name="DietQuality" required className="w-full px-2 py-1.5 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all text-sm" onChange={handleInputChange} />
-                    </div>
-                    <div className="space-y-1">
-                      <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Sleep (0-10)</label>
-                      <input type="number" name="SleepQuality" required className="w-full px-2 py-1.5 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all text-sm" onChange={handleInputChange} />
-                    </div>
-                  </div>
-                </section>
-              </div>
-
-              {/* Column 2: Medical History */}
-              <div className="space-y-6">
-                <section className="space-y-3">
-                  <h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100 border-b border-neutral-200 dark:border-neutral-800 pb-1">
-                    Medical History
-                  </h3>
+            
+            <div className="space-y-8">
+              {/* Group 1: Demographics */}
+              <div>
+                <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4 flex items-center gap-2">
+                  <div className="h-1 w-1 rounded-full bg-violet-500" />
+                  Demographics
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   <div className="space-y-2">
-                    {[
-                      { name: "Smoking", label: "Smoker" },
-                      { name: "FamilyHistoryParkinsons", label: "Family History" },
-                      { name: "TraumaticBrainInjury", label: "Brain Injury" },
-                      { name: "Hypertension", label: "Hypertension" },
-                      { name: "Diabetes", label: "Diabetes" },
-                      { name: "Depression", label: "Depression" },
-                      { name: "Stroke", label: "Stroke" },
-                    ].map((item) => (
-                      <label key={item.name} className="flex items-center gap-3 p-2 rounded-lg border border-neutral-200 dark:border-neutral-800 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors">
-                        <input type="checkbox" name={item.name} onChange={(e) => setFormData(prev => ({ ...prev, [item.name]: e.target.checked ? "1" : "0" }))} className="w-4 h-4 rounded text-violet-600 focus:ring-violet-500" />
-                        <span className="text-xs font-medium text-neutral-700 dark:text-neutral-300">{item.label}</span>
-                      </label>
-                    ))}
+                    <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Age [Age] (Years)</label>
+                    <input type="number" name="Age" value={formData.Age} onChange={handleInputChange} required placeholder="e.g. 65" className="w-full px-4 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all placeholder:text-neutral-400" />
                   </div>
-                </section>
-              </div>
-
-              {/* Column 3: Vitals & Labs */}
-              <div className="space-y-6">
-                <section className="space-y-3">
-                  <h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100 border-b border-neutral-200 dark:border-neutral-800 pb-1">
-                    Vitals & Labs
-                  </h3>
-                  <div className="grid grid-cols-1 gap-2">
-                    <div className="grid grid-cols-2 gap-2">
-                      <div className="space-y-1">
-                        <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Sys BP</label>
-                        <input type="number" name="SystolicBP" required className="w-full px-2 py-1.5 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all text-sm" onChange={handleInputChange} />
-                      </div>
-                      <div className="space-y-1">
-                        <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Dia BP</label>
-                        <input type="number" name="DiastolicBP" required className="w-full px-2 py-1.5 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all text-sm" onChange={handleInputChange} />
-                      </div>
-                    </div>
-                    <div className="space-y-1">
-                      <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Total Chol.</label>
-                      <input type="number" name="CholesterolTotal" required className="w-full px-2 py-1.5 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all text-sm" onChange={handleInputChange} />
-                    </div>
-                    <div className="space-y-1">
-                      <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">LDL</label>
-                      <input type="number" name="CholesterolLDL" required className="w-full px-2 py-1.5 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all text-sm" onChange={handleInputChange} />
-                    </div>
-                    <div className="space-y-1">
-                      <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">HDL</label>
-                      <input type="number" name="CholesterolHDL" required className="w-full px-2 py-1.5 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all text-sm" onChange={handleInputChange} />
-                    </div>
-                    <div className="space-y-1">
-                      <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Triglycerides</label>
-                      <input type="number" name="CholesterolTriglycerides" required className="w-full px-2 py-1.5 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all text-sm" onChange={handleInputChange} />
-                    </div>
-                  </div>
-                </section>
-              </div>
-
-              {/* Column 4: Assessments & Symptoms */}
-              <div className="space-y-6">
-                <section className="space-y-3">
-                  <h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100 border-b border-neutral-200 dark:border-neutral-800 pb-1">
-                    Assessments
-                  </h3>
-                  <div className="grid grid-cols-2 gap-2">
-                    <div className="space-y-1">
-                      <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">UPDRS</label>
-                      <input type="number" name="UPDRS" required className="w-full px-2 py-1.5 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all text-sm" onChange={handleInputChange} placeholder="0-199" />
-                    </div>
-                    <div className="space-y-1">
-                      <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">MoCA</label>
-                      <input type="number" name="MoCA" required className="w-full px-2 py-1.5 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all text-sm" onChange={handleInputChange} placeholder="0-30" />
-                    </div>
-                    <div className="col-span-2 space-y-1">
-                      <label className="text-xs font-medium text-neutral-700 dark:text-neutral-300">Functional (0-10)</label>
-                      <input type="number" name="FunctionalAssessment" required className="w-full px-2 py-1.5 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all text-sm" onChange={handleInputChange} />
-                    </div>
-                  </div>
-                </section>
-
-                <section className="space-y-3">
-                  <h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100 border-b border-neutral-200 dark:border-neutral-800 pb-1">
-                    Symptoms
-                  </h3>
                   <div className="space-y-2">
-                    {[
-                      { name: "Tremor", label: "Tremor" },
-                      { name: "Rigidity", label: "Rigidity" },
-                      { name: "Bradykinesia", label: "Bradykinesia" },
-                      { name: "PosturalInstability", label: "Postural Instability" },
-                      { name: "SpeechProblems", label: "Speech Problems" },
-                      { name: "SleepDisorders", label: "Sleep Disorders" },
-                      { name: "Constipation", label: "Constipation" },
-                    ].map((item) => (
-                      <label key={item.name} className="flex items-center gap-3 p-2 rounded-lg border border-neutral-200 dark:border-neutral-800 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors">
-                        <input type="checkbox" name={item.name} onChange={(e) => setFormData(prev => ({ ...prev, [item.name]: e.target.checked ? "1" : "0" }))} className="w-4 h-4 rounded text-violet-600 focus:ring-violet-500" />
-                        <span className="text-xs font-medium text-neutral-700 dark:text-neutral-300">{item.label}</span>
-                      </label>
-                    ))}
+                    <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Gender [Gender]</label>
+                    <select name="Gender" value={formData.Gender} onChange={handleInputChange} className="w-full px-4 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all">
+                      <option value="1">Male</option>
+                      <option value="0">Female</option>
+                    </select>
                   </div>
-                </section>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Ethnicity [Ethnicity]</label>
+                    <select name="Ethnicity" value={formData.Ethnicity} onChange={handleInputChange} className="w-full px-4 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all">
+                      <option value="0">Caucasian</option>
+                      <option value="1">African American</option>
+                      <option value="2">Asian</option>
+                      <option value="3">Other</option>
+                    </select>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Education Level [EducationLevel]</label>
+                    <select name="EducationLevel" value={formData.EducationLevel} onChange={handleInputChange} className="w-full px-4 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all">
+                      <option value="0">None</option>
+                      <option value="1">High School</option>
+                      <option value="2">Bachelor's</option>
+                      <option value="3">Higher</option>
+                    </select>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Body Mass Index [BMI] (kg/m²)</label>
+                    <input type="number" step="0.1" name="BMI" value={formData.BMI} onChange={handleInputChange} required placeholder="e.g. 24.5" className="w-full px-4 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all placeholder:text-neutral-400" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Group 2: Lifestyle */}
+              <div>
+                <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4 flex items-center gap-2">
+                  <div className="h-1 w-1 rounded-full bg-violet-500" />
+                  Lifestyle
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Smoking Status [Smoking]</label>
+                    <select name="Smoking" value={formData.Smoking} onChange={handleInputChange} className="w-full px-4 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all">
+                      <option value="0">No</option>
+                      <option value="1">Yes</option>
+                    </select>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Alcohol Consumption [AlcoholConsumption] (Units/Week)</label>
+                    <input type="number" name="AlcoholConsumption" value={formData.AlcoholConsumption} onChange={handleInputChange} required placeholder="e.g. 2" className="w-full px-4 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all placeholder:text-neutral-400" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Physical Activity [PhysicalActivity] (Hours/Week)</label>
+                    <input type="number" name="PhysicalActivity" value={formData.PhysicalActivity} onChange={handleInputChange} required placeholder="e.g. 5" className="w-full px-4 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all placeholder:text-neutral-400" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Diet Quality [DietQuality] (0-10)</label>
+                    <input type="number" name="DietQuality" value={formData.DietQuality} onChange={handleInputChange} required placeholder="e.g. 8" className="w-full px-4 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all placeholder:text-neutral-400" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Sleep Quality [SleepQuality] (0-10)</label>
+                    <input type="number" name="SleepQuality" value={formData.SleepQuality} onChange={handleInputChange} required placeholder="e.g. 7" className="w-full px-4 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all placeholder:text-neutral-400" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Group 3: History */}
+              <div>
+                <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4 flex items-center gap-2">
+                  <div className="h-1 w-1 rounded-full bg-violet-500" />
+                  Medical History
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Family History of Parkinson's [FamilyHistoryParkinsons]</label>
+                    <select name="FamilyHistoryParkinsons" value={formData.FamilyHistoryParkinsons} onChange={handleInputChange} className="w-full px-4 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all">
+                      <option value="0">No</option>
+                      <option value="1">Yes</option>
+                    </select>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Traumatic Brain Injury [TraumaticBrainInjury]</label>
+                    <select name="TraumaticBrainInjury" value={formData.TraumaticBrainInjury} onChange={handleInputChange} className="w-full px-4 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all">
+                      <option value="0">No</option>
+                      <option value="1">Yes</option>
+                    </select>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Hypertension [Hypertension]</label>
+                    <select name="Hypertension" value={formData.Hypertension} onChange={handleInputChange} className="w-full px-4 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all">
+                      <option value="0">No</option>
+                      <option value="1">Yes</option>
+                    </select>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Diabetes History [Diabetes]</label>
+                    <select name="Diabetes" value={formData.Diabetes} onChange={handleInputChange} className="w-full px-4 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all">
+                      <option value="0">No</option>
+                      <option value="1">Yes</option>
+                    </select>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Depression [Depression]</label>
+                    <select name="Depression" value={formData.Depression} onChange={handleInputChange} className="w-full px-4 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all">
+                      <option value="0">No</option>
+                      <option value="1">Yes</option>
+                    </select>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Stroke History [Stroke]</label>
+                    <select name="Stroke" value={formData.Stroke} onChange={handleInputChange} className="w-full px-4 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all">
+                      <option value="0">No</option>
+                      <option value="1">Yes</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              {/* Group 4: Vitals */}
+              <div>
+                <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4 flex items-center gap-2">
+                  <div className="h-1 w-1 rounded-full bg-violet-500" />
+                  Vitals
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Systolic Blood Pressure [SystolicBP] (mmHg)</label>
+                    <input type="number" name="SystolicBP" value={formData.SystolicBP} onChange={handleInputChange} required placeholder="e.g. 120" className="w-full px-4 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all placeholder:text-neutral-400" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Diastolic Blood Pressure [DiastolicBP] (mmHg)</label>
+                    <input type="number" name="DiastolicBP" value={formData.DiastolicBP} onChange={handleInputChange} required placeholder="e.g. 80" className="w-full px-4 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all placeholder:text-neutral-400" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Group 5: Labs */}
+              <div>
+                <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4 flex items-center gap-2">
+                  <div className="h-1 w-1 rounded-full bg-violet-500" />
+                  Labs
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Total Cholesterol [CholesterolTotal] (mg/dL)</label>
+                    <input type="number" name="CholesterolTotal" value={formData.CholesterolTotal} onChange={handleInputChange} required placeholder="e.g. 200" className="w-full px-4 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all placeholder:text-neutral-400" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">LDL Cholesterol [CholesterolLDL] (mg/dL)</label>
+                    <input type="number" name="CholesterolLDL" value={formData.CholesterolLDL} onChange={handleInputChange} required placeholder="e.g. 100" className="w-full px-4 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all placeholder:text-neutral-400" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">HDL Cholesterol [CholesterolHDL] (mg/dL)</label>
+                    <input type="number" name="CholesterolHDL" value={formData.CholesterolHDL} onChange={handleInputChange} required placeholder="e.g. 60" className="w-full px-4 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all placeholder:text-neutral-400" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Triglycerides [CholesterolTriglycerides] (mg/dL)</label>
+                    <input type="number" name="CholesterolTriglycerides" value={formData.CholesterolTriglycerides} onChange={handleInputChange} required placeholder="e.g. 150" className="w-full px-4 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all placeholder:text-neutral-400" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Group 6: Assessments */}
+              <div>
+                <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4 flex items-center gap-2">
+                  <div className="h-1 w-1 rounded-full bg-violet-500" />
+                  Clinical Assessments
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">UPDRS Score [UPDRS]</label>
+                    <input type="number" name="UPDRS" value={formData.UPDRS} onChange={handleInputChange} required placeholder="e.g. 15" className="w-full px-4 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all placeholder:text-neutral-400" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">MoCA Score [MoCA] (0-30)</label>
+                    <input type="number" name="MoCA" value={formData.MoCA} onChange={handleInputChange} required placeholder="e.g. 26" className="w-full px-4 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all placeholder:text-neutral-400" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Functional Assessment [FunctionalAssessment] (0-10)</label>
+                    <input type="number" name="FunctionalAssessment" value={formData.FunctionalAssessment} onChange={handleInputChange} required placeholder="e.g. 8" className="w-full px-4 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all placeholder:text-neutral-400" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Group 7: Symptoms */}
+              <div>
+                <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-4 flex items-center gap-2">
+                  <div className="h-1 w-1 rounded-full bg-violet-500" />
+                  Symptoms
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Tremor [Tremor]</label>
+                    <select name="Tremor" value={formData.Tremor} onChange={handleInputChange} className="w-full px-4 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all">
+                      <option value="0">No</option>
+                      <option value="1">Yes</option>
+                    </select>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Rigidity [Rigidity]</label>
+                    <select name="Rigidity" value={formData.Rigidity} onChange={handleInputChange} className="w-full px-4 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all">
+                      <option value="0">No</option>
+                      <option value="1">Yes</option>
+                    </select>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Bradykinesia [Bradykinesia]</label>
+                    <select name="Bradykinesia" value={formData.Bradykinesia} onChange={handleInputChange} className="w-full px-4 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all">
+                      <option value="0">No</option>
+                      <option value="1">Yes</option>
+                    </select>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Postural Instability [PosturalInstability]</label>
+                    <select name="PosturalInstability" value={formData.PosturalInstability} onChange={handleInputChange} className="w-full px-4 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all">
+                      <option value="0">No</option>
+                      <option value="1">Yes</option>
+                    </select>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Speech Problems [SpeechProblems]</label>
+                    <select name="SpeechProblems" value={formData.SpeechProblems} onChange={handleInputChange} className="w-full px-4 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all">
+                      <option value="0">No</option>
+                      <option value="1">Yes</option>
+                    </select>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Sleep Disorders [SleepDisorders]</label>
+                    <select name="SleepDisorders" value={formData.SleepDisorders} onChange={handleInputChange} className="w-full px-4 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all">
+                      <option value="0">No</option>
+                      <option value="1">Yes</option>
+                    </select>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Constipation [Constipation]</label>
+                    <select name="Constipation" value={formData.Constipation} onChange={handleInputChange} className="w-full px-4 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 focus:ring-2 focus:ring-violet-500 outline-none transition-all">
+                      <option value="0">No</option>
+                      <option value="1">Yes</option>
+                    </select>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div className="pt-4">
+            <div className="pt-8">
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-violet-600 hover:bg-violet-700 text-white font-semibold text-base transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-violet-500/20"
+                className="w-full flex items-center justify-center gap-2 py-4 rounded-xl bg-violet-600 hover:bg-violet-700 text-white font-semibold text-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-violet-500/20"
               >
                 {isLoading ? (
                   <>
