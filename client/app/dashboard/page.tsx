@@ -2,11 +2,11 @@
 
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { motion } from "framer-motion";
 import { Calendar, Activity, Trash2, Clock } from "lucide-react";
 import Link from "next/link";
 import { HealthTrendChart } from "@/components/HealthTrendChart";
+import { deletePrediction, getPredictionHistory } from "@/actions/user.actions";
 
 interface HistoryItem {
   _id?: string;
@@ -30,7 +30,10 @@ export default function DashboardPage() {
 
     try {
       if (status === "authenticated") {
-        await axios.delete(`/api/user/history/${id}`);
+        const response = await deletePrediction(id);
+        if (!response.success) {
+          throw new Error(response.error || "Failed to delete item");
+        }
       } else {
         const localData = JSON.parse(localStorage.getItem("mediassist_history") || "[]");
         const newData = localData.filter((item: any) => item.id !== id);
@@ -47,9 +50,8 @@ export default function DashboardPage() {
     const fetchHistory = async () => {
       try {
         if (status === "authenticated") {
-          // Fetch from MongoDB (We will create this route next)
-          const res = await axios.get("/api/user/history");
-          setHistory(res.data.history);
+          const serverHistory = await getPredictionHistory();
+          setHistory(serverHistory as HistoryItem[]);
         } else {
           // Fetch from LocalStorage (Guest)
           const localData = localStorage.getItem("mediassist_history");

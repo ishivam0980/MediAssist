@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft, Heart, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { PredictionResult } from "@/components/ui/PredictionResult";
-import { predictHeartDisease } from "@/lib/api";
+import { predictAndSave } from "@/actions/prediction.actions";
 
 export default function HeartDiseasePage() {
   const { data: session } = useSession();
@@ -40,10 +40,10 @@ export default function HeartDiseasePage() {
     setError(null);
 
     try {
-      const response = await predictHeartDisease(formData);
+      const response = await predictAndSave("heart-disease", formData);
       
       if (response.success) {
-        setResult(response);
+        setResult(response.data);
 
         // Save to LocalStorage if Guest
         if (!session) {
@@ -52,9 +52,9 @@ export default function HeartDiseasePage() {
             disease: "heart-disease",
             createdAt: new Date().toISOString(),
             result: {
-              risk_level: response.risk_assessment?.level,
-              probability: response.prediction?.probability,
-              prediction: response.prediction?.disease_detected ? "Positive" : "Negative",
+              risk_level: response.data?.risk_assessment?.level,
+              probability: response.data?.prediction?.probability,
+              prediction: response.data?.prediction?.disease_detected ? "Positive" : "Negative",
             },
             inputData: formData,
           };

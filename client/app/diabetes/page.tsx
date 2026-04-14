@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft, Activity, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { PredictionResult } from "@/components/ui/PredictionResult";
-import { predictDiabetes } from "@/lib/api";
+import { predictAndSave } from "@/actions/prediction.actions";
 
 export default function DiabetesPage() {
   const { data: session } = useSession();
@@ -38,10 +38,10 @@ export default function DiabetesPage() {
     setError(null);
 
     try {
-      const response = await predictDiabetes(formData);
+      const response = await predictAndSave("diabetes", formData);
       
       if (response.success) {
-        setResult(response);
+        setResult(response.data);
 
         // Save to LocalStorage if Guest
         if (!session) {
@@ -50,9 +50,9 @@ export default function DiabetesPage() {
             disease: "diabetes",
             createdAt: new Date().toISOString(),
             result: {
-              risk_level: response.risk_assessment?.level,
-              probability: response.prediction?.probability,
-              prediction: response.prediction?.disease_detected ? "Positive" : "Negative",
+              risk_level: response.data?.risk_assessment?.level,
+              probability: response.data?.prediction?.probability,
+              prediction: response.data?.prediction?.disease_detected ? "Positive" : "Negative",
             },
             inputData: formData,
           };

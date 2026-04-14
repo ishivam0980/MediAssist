@@ -5,7 +5,7 @@ import { User, Mail, LogOut, Shield, Edit2, Save, X } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import { getUserProfile, updateUserProfile } from "@/actions/user.actions";
 
 export default function ProfilePage() {
   const { data: session, status, update } = useSession();
@@ -26,16 +26,19 @@ export default function ProfilePage() {
     const fetchProfile = async () => {
       try {
         if (status === "authenticated") {
-          const res = await axios.get("/api/user/profile");
+          const user = await getUserProfile();
+          if (!user) {
+            return;
+          }
           setFormData({
-            name: res.data.user.name || "",
-            email: res.data.user.email || "",
-            image: res.data.user.image || "",
-            phone: res.data.user.phone || "",
-            age: res.data.user.age || "",
-            gender: res.data.user.gender || "",
-            bloodType: res.data.user.bloodType || "",
-            height: res.data.user.height || "",
+            name: user.name || "",
+            email: user.email || "",
+            image: user.image || "",
+            phone: user.phone || "",
+            age: user.age || "",
+            gender: user.gender || "",
+            bloodType: user.bloodType || "",
+            height: user.height || "",
           });
         }
       } catch (error) {
@@ -52,7 +55,7 @@ export default function ProfilePage() {
 
   const handleSave = async () => {
     try {
-      await axios.put("/api/user/profile", formData);
+      await updateUserProfile(formData);
       await update(); // Refresh session data from DB
       setIsEditing(false);
       // Ideally show a success toast here

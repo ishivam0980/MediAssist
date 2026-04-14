@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft, Brain, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { PredictionResult } from "@/components/ui/PredictionResult";
-import { predictParkinsons } from "@/lib/api";
+import { predictAndSave } from "@/actions/prediction.actions";
 
 export default function ParkinsonsPage() {
   const { data: session } = useSession();
@@ -59,10 +59,10 @@ export default function ParkinsonsPage() {
     setError(null);
 
     try {
-      const response = await predictParkinsons(formData);
+      const response = await predictAndSave("parkinsons", formData);
       
       if (response.success) {
-        setResult(response);
+        setResult(response.data);
 
         // Save to LocalStorage if Guest
         if (!session) {
@@ -71,9 +71,9 @@ export default function ParkinsonsPage() {
             disease: "parkinsons",
             createdAt: new Date().toISOString(),
             result: {
-              risk_level: response.risk_assessment?.level,
-              probability: response.prediction?.probability,
-              prediction: response.prediction?.disease_detected ? "Positive" : "Negative",
+              risk_level: response.data?.risk_assessment?.level,
+              probability: response.data?.prediction?.probability,
+              prediction: response.data?.prediction?.disease_detected ? "Positive" : "Negative",
             },
             inputData: formData,
           };
