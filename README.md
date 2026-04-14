@@ -161,30 +161,6 @@ The application utilizes high-performance machine learning models trained on val
 
 ## System Architecture
 
-### Model Management (Singleton Pattern)
-
-The backend implements the **Singleton Design Pattern** for ML model management through the `ModelManager` class:
-
-```python
-class ModelManager:
-    """Singleton Pattern for ML model management."""
-    _instance = None
-    _models = {}
-    _scalers = {}
-    _shap_explainers = {}
-  
-    def __new__(cls):
-        if cls._instance is None:
-            cls._instance = super().__new__(cls)
-        return cls._instance
-```
-
-**Benefits:**
-
-- **Reduced Latency**: Models are loaded once at startup, not on every request
-- **Memory Efficiency**: Single instance prevents duplicate model copies
-- **Thread Safety**: Consistent caching across concurrent requests
-
 ### Explainable AI Pipeline
 
 Every prediction flows through a SHAP explainability layer:
@@ -248,13 +224,6 @@ User Input → Pydantic Validation → Model Prediction → SHAP Analysis → Re
 **Database**
 
 - **Primary DB**: MongoDB Atlas (Cloud-hosted)
-- **ODM**: Mongoose (for Next.js API routes)
-
-**DevOps & Infrastructure**
-
-- **Containerization**: Docker & Docker Compose
-- **Services**: MongoDB, FastAPI, Next.js orchestrated together
-- **Deployment**: Vercel (Frontend), Render/Railway (Backend)
 
 ## Quick Start with Docker
 
@@ -520,131 +489,7 @@ You should see:
 4. Enter OTP and complete registration
 5. Login and start making predictions
 
-## Common Issues & Solutions
-
-### Issue 1: "Module not found" errors in Python
-
-**Solution:**
-
-```bash
-cd server
-pip install -r requirements.txt --upgrade
-```
-
-### Issue 2: "Cannot find module 'next'" in Node.js
-
-**Solution:**
-
-```bash
-cd client
-rm -rf node_modules package-lock.json
-npm install
-```
-
-### Issue 3: MongoDB connection fails
-
-**Solution:**
-
-- Check your MONGODB_URI is correct
-- Ensure you replaced `<password>` with your actual password
-- Verify IP address 0.0.0.0/0 is allowed in MongoDB Atlas Network Access
-- Check your internet connection
-
-### Issue 4: Google OAuth not working
-
-**Solution:**
-
-- Verify redirect URIs match exactly in Google Cloud Console
-- Make sure NEXTAUTH_URL is `http://localhost:3000` (no trailing slash)
-- Clear browser cookies and try again
-
-### Issue 5: Email OTP not sending
-
-**Solution:**
-
-- Verify EMAIL_USER and EMAIL_PASS are correct
-- Make sure you're using a Gmail App Password, not your regular password
-- Check if 2-Step Verification is enabled on your Google Account
-- Try generating a new App Password
-
-### Issue 6: Port already in use
-
-**Backend (Port 5000):**
-
-```bash
-# Windows
-netstat -ano | findstr :5000
-taskkill /PID <PID> /F
-
-# macOS/Linux
-lsof -ti:5000 | xargs kill -9
-```
-
-**Frontend (Port 3000):**
-
-```bash
-# Windows
-netstat -ano | findstr :3000
-taskkill /PID <PID> /F
-
-# macOS/Linux
-lsof -ti:3000 | xargs kill -9
-```
-
-## Development Workflow
-
-### Making Changes
-
-1. **Backend changes** (FastAPI/Python):
-
-   - Edit files in `server/`
-   - Server auto-reloads (if using `--reload` flag)
-2. **Frontend changes** (Next.js/TypeScript):
-
-   - Edit files in `client/`
-   - Next.js auto-reloads in browser
-
-### Testing
-
-**Test Backend API:**
-
-```bash
-cd server
-python -c "from app import app; print('Backend imports successfully')"
-```
-
-**Test Frontend Build:**
-
-```bash
-cd client
-npm run build
-```
-
-### Stopping the Application
-
-Press `Ctrl+C` in both terminal windows to stop the servers.
-
-## Project Structure
-
-- **client/**: Contains the Next.js frontend application.
-
-  - **app/**: App Router pages and API routes.
-  - **components/**: Reusable UI components.
-  - **lib/**: Utility functions and database configurations.
-  - **models/**: Mongoose database schemas.
-- **server/**: Contains the FastAPI backend application.
-
-  - **models/**: Serialized machine learning models (.pkl files).
-  - **routes/**: API endpoints for predictions.
-  - **data/**: Datasets used for training (if applicable).
-
-## Disclaimer
-
-**MediAssist is an educational tool and is not intended to replace professional medical advice, diagnosis, or treatment.** The predictions provided by this application are based on statistical models and should be used for informational purposes only. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition.
-
----
-
-## Technical Highlights 
+## Technical Highlights
 
 This project demonstrates proficiency in the following technologies and concepts:
 
@@ -652,22 +497,13 @@ This project demonstrates proficiency in the following technologies and concepts
 `Next.js 16` · `React 19` · `TypeScript` · `App Router` · `Server Components` · `Tailwind CSS` · `Framer Motion` · `Recharts` · `Responsive Design` · `Dark Mode`
 
 **Backend Development:**
-`Python` · `FastAPI` · `REST API` · `Pydantic Validation` · `Uvicorn` · `Hot Reload` · `CORS`
+`Python` · `FastAPI` · `REST API` · `P`
 
 **Machine Learning & AI:**
 `Scikit-learn` · `XGBoost` · `Random Forest` · `Logistic Regression` · `SVM` · `SHAP` · `Explainable AI (XAI)` · `Feature Engineering` · `Model Evaluation` · `F1 Score` · `ROC-AUC`
 
-**Database & ORM:**
-`MongoDB Atlas` · `Mongoose ODM` · `TTL Indexes` · `Document Expiry` · `NoSQL`
+**Database:**
+`MongoDB `
 
 **Authentication & Security:**
 `NextAuth.js` · `OAuth 2.0` · `Google Provider` · `Credentials Provider` · `bcrypt` · `Password Hashing` · `OTP Verification` · `Session Management`
-
-**DevOps & Infrastructure:**
-`Docker` · `Docker Compose` · `Multi-stage Builds` · `Container Orchestration` · `Vercel` · `Git` · `GitHub`
-
-**Design Patterns:**
-`Singleton Pattern` · `MVC Architecture` · `API Gateway Pattern` · `Caching Strategy`
-
-**Software Engineering Practices:**
-`Clean Code` · `Type Safety` · `Input Validation` · `Error Handling` · `Graceful Degradation` · `Code Documentation`
