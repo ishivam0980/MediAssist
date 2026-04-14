@@ -12,16 +12,16 @@ npm run dev
 
 Open http://localhost:3000
 
-## What you will find here
+## What is included
 
 - Home page with disease cards
-- Diabetes, Heart Disease, and Parkinson's prediction forms
-- Dashboard for prediction history
+- Prediction forms for Diabetes, Heart Disease, and Parkinson's
+- Dashboard for history
 - Profile page for user details
 - Login page for auth
-- Server Actions under `client/actions/`
+- Server Actions in `client/actions/`
 
-## Main env vars
+## Environment variables
 
 Create a `.env.local` file in `client/` with values like:
 

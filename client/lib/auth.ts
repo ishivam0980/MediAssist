@@ -57,10 +57,39 @@ export const {
   ],
   callbacks: {
     ...authConfig.callbacks,
+    async jwt({ token }) {
+      try {
+        if (token.sub) {
+          await dbConnect();
+          const user = await User.findById(token.sub);
+          if (user) {
+            token.name = user.name;
+            token.email = user.email;
+            token.picture = user.image;
+          }
+        }
+      } catch (error) {
+        console.error("JWT callback error:", error);
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      try {
+        if (token.sub && session.user) {
+          session.user.id = token.sub;
+          session.user.name = token.name;
+          session.user.email = token.email!;
+          session.user.image = token.picture;
+        }
+      } catch (error) {
+        console.error("Session callback error:", error);
+      }
+      return session;
+    },
     async signIn({ user, account }) {
       if (account?.provider === "google") {
-        await dbConnect();
         try {
+          await dbConnect();
           const existingUser = await User.findOne({ email: user.email });
           if (!existingUser) {
             await User.create({
@@ -71,10 +100,8 @@ export const {
               isVerified: true,
             });
           }
-          return true;
         } catch (err) {
-          console.log("Error saving user", err);
-          return false;
+          console.log("Google sign-in user sync skipped:", err);
         }
       }
       return true;
