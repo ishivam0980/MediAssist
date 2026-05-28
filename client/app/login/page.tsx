@@ -165,7 +165,7 @@ export default function LoginPage() {
                   value={data.email}
                   onChange={handleChange}
                   required
-                  placeholder="john@example.com"
+                  placeholder="shivam@example.com"
                   className="py-2"
                 />
                 <Input
@@ -201,7 +201,7 @@ export default function LoginPage() {
                   value={data.name}
                   onChange={handleChange}
                   required
-                  placeholder="John Doe"
+                  placeholder="Shivam Srivastava"
                   className="py-2"
                 />
                 <Input
@@ -211,7 +211,7 @@ export default function LoginPage() {
                   value={data.email}
                   onChange={handleChange}
                   required
-                  placeholder="john@example.com"
+                  placeholder="shivam@example.com"
                   className="py-2"
                 />
                 <Input
